@@ -47,9 +47,14 @@ expr:   primary
 
 builtinfunction
     :
-        SELECT '(' expr ',' expr? ')' //select(TREE,<boolean-expression>)
-    |   JOIN '(' expr ',' expr ',' expr? ')' //join(TREE,TREE,<boolean-expression>)
-    |   MERGE '(' expr ',' expr ',' conflictspec? ',' expr? ')' //merge(TREE,TREE,conflictspec,<merger-condition>)
+    |   SELECT '(' TREE ',' expr? ')' //select(TREE,<boolean-expression>)
+    |   JOIN '(' TREE ',' TREE ',' expr? ')' //join(TREE,TREE,<boolean-expression>)
+    |   MERGE '(' TREE ',' TREE ',' conflictspec? ',' expr? ')' //merge(TREE,TREE,conflictspec,<merger-condition>)
+    |   PATH '(' TREE ',' NODE ')' //path (TREE,NODE)
+    |   RECOGNIZE '(' NODE ',' SET ')' //recognize (NODE,ext-rule-set)
+    |   EXPLODE '(' TREE ',' expr? ')'
+    |   DROP '(' TREE ',' NODE ')' 
+    //<boolean-expression>, ext-rule-set, tree-expression bunları da tanımlamak gerekir mi?
 ;    
     
 conflictspec
@@ -60,7 +65,7 @@ conflictspec
     |   TERMINATE
     |   OVERRIDE
     |   EVALUATE
-
+;
 primary
     : LPAREN expr RPAREN
     | literal
@@ -115,9 +120,11 @@ TERMINATEIFNOTEQUAL:'terminateifnotequal';
 TERMINATE:          'terminate';
 OVERRIDE:           'override';
 EVALUATE:           'evaluate';
+EXPLODE:            'explode';
 DEFAULT:			'default';
 DO:					'do';
 DOUBLE:             'double';
+DROP:               'drop';
 ELSE:               'else';
 FLOAT:              'float';
 FOR:                'for';
@@ -129,10 +136,12 @@ LONG:               'long';
 MERGE:              'merge';
 NEW:				'new';
 NODE:               'node';
+RECOGNIZE:          'recognize';
 RETURN:             'return';
 SHORT:              'short';
 SWITCH:             'switch';
 STRING:				'String';
+PATH:               'Path';
 WHILE: 				'while';
 TREE:				'Tree';
 THROW:				'throw';

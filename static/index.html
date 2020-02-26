@@ -39,8 +39,31 @@ document.getElementById("parse").addEventListener("click", function(){
     const formatter = new JSONFormatter(tree);
     document.getElementsByClassName("root")[0].innerHTML = '';
     document.getElementsByClassName("root")[0].appendChild(formatter.render());
+    //updateTree(tree,parser.ruleNames);
     
 });
+
+var removeChildNodes=function(container){
+    while (container.hasChildNodes()) {
+        removeChildNodes(container.lastChild);
+        container.removeChild(container.lastChild);
+    }
+}
+
+var updateTree = function(tree, ruleNames) {
+    var container = document.getElementById("tree");
+    removeChildNodes(container);
+    for (var i = 0; i < tree.children.length; i++) {
+        var child = tree.children[i];
+        var nodeType = ruleNames[child.ruleIndex];
+        var newElement = document.createElement("div");
+        newElement.className = nodeType;
+        var newElementText = document.createTextNode(child.children[2].getText());
+        newElement.appendChild(newElementText);
+        container.appendChild(newElement);
+        
+    }
+};
 </script>
 <div id="tree">
 </div> 
