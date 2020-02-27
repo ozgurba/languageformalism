@@ -10,9 +10,12 @@
 <div class="root"></div>
 <div id="inputs">
 <textarea id="code" rows="25" cols="100">
-String p="str"+((8+9)-7*5)/6;
-Tree xmlTree;
-int sum=15+16+17*3;
+    void main(){
+        String p="str"+((8+9)-7*5)/6;
+        Tree xmlTree;
+        int sum=15+16+17*3;
+        Tree selectedTree=select(xmlTree,xmlTree.treeNode.val==5);
+    }
 </textarea>
 <br/>
 <button id="parse">Parse</button>
@@ -39,7 +42,7 @@ document.getElementById("parse").addEventListener("click", function(){
     const formatter = new JSONFormatter(tree);
     document.getElementsByClassName("root")[0].innerHTML = '';
     document.getElementsByClassName("root")[0].appendChild(formatter.render());
-    //updateTree(tree,parser.ruleNames);
+    updateTable(tree,parser.ruleNames);
     
 });
 
@@ -50,22 +53,21 @@ var removeChildNodes=function(container){
     }
 }
 
-var updateTree = function(tree, ruleNames) {
-    var container = document.getElementById("tree");
+var updateTable = function(tree, ruleNames) {
+    var container = document.getElementById("table");
     removeChildNodes(container);
     for (var i = 0; i < tree.children.length; i++) {
         var child = tree.children[i];
         var nodeType = ruleNames[child.ruleIndex];
         var newElement = document.createElement("div");
         newElement.className = nodeType;
-        var newElementText = document.createTextNode(child.children[2].getText());
+        var newElementText = document.createTextNode(child.getText());
         newElement.appendChild(newElementText);
         container.appendChild(newElement);
-        
     }
 };
 </script>
-<div id="tree">
+<div id="table">
 </div> 
 </body>
 </html>

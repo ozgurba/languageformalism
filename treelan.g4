@@ -1,28 +1,32 @@
 grammar treelan;
 
-// source: http://media.pragprog.com/titles/tpantlr2/code/examples/Cymbol.g4
-
+// inspired from source: http://media.pragprog.com/titles/tpantlr2/code/examples/Cymbol.g4
 /** Simple statically-typed programming language with functions and variables
  *  taken from "Language Implementation Patterns" book.
  */
 
-stats:   (varDecl|stat)+ ;
+stats:   (functionDecl|stat)+ ;
 
 varDecl
     :   typeType IDENTIFIER (ASSIGN expr)? ';'
+    ;
+
+functionDecl  //void main() {...} will be the executable main block
+    :   typeType IDENTIFIER '(' formalParameters? ')' block // "void f(int x) {...}"
     ;
     
 formalParameters
     :   formalParameter (',' formalParameter)*
     ;
 formalParameter
-    :   typeType IDENTIFIER
+    :   typeType qualifiedName
     ;
 
 block:  '{' stat* '}' ;   // possibly empty statement block
 stat:   block
     |   varDecl
     |   IF parExpr stat (ELSE stat)?
+    |   WHILE parExpr stat
     |   expr ';'          // func call
     | varDecl ';'
     ;
@@ -33,28 +37,27 @@ parExpr
 
 expr:   primary
     |   builtinfunction
-	|	IDENTIFIER '(' exprList? ')'    // func call like f(), f(x), f(1,2)
-    |   IDENTIFIER '[' expr ']'         // array index like a[i], a[i][j]
+	|	qualifiedName '(' exprList? ')'    // func call like f(), f(x), f(1,2)
+    |   qualifiedName '[' expr ']'         // array index like a[i], a[i][j]
     |   SUB expr                // unary minus
     |   BANG expr                // boolean not
     |   expr (MUL|DIV) expr
     |   expr (ADD|SUB) expr
     |   expr ASSIGN expr // assignment
     |   expr EQUAL expr          // equality comparison (lowest priority op)
-    |   IDENTIFIER                      // variable reference
+    |   qualifiedName                      // variable reference
     |   LPAREN expr RPAREN
     ;
 
 builtinfunction
-    :
-    |   SELECT '(' TREE ',' expr? ')' //select(TREE,<boolean-expression>)
-    |   JOIN '(' TREE ',' TREE ',' expr? ')' //join(TREE,TREE,<boolean-expression>)
-    |   MERGE '(' TREE ',' TREE ',' conflictspec? ',' expr? ')' //merge(TREE,TREE,conflictspec,<merger-condition>)
-    |   PATH '(' TREE ',' NODE ')' //path (TREE,NODE)
-    |   RECOGNIZE '(' NODE ',' SET ')' //recognize (NODE,ext-rule-set)
-    |   EXPLODE '(' TREE ',' expr? ')'
-    |   DROP '(' TREE ',' NODE ')' 
-    //<boolean-expression>, ext-rule-set, tree-expression bunları da tanımlamak gerekir mi?
+    :   SELECT '(' qualifiedName (',' expr)? ')' //select(TREE,<boolean-expression>)
+    |   JOIN '(' qualifiedName ',' qualifiedName (',' expr)? ')' //join(TREE,TREE,<boolean-expression>)
+    |   MERGE '(' qualifiedName ',' qualifiedName (',' conflictspec)? (',' expr)? ')' //merge(TREE,TREE,conflictspec,<merger-condition>)
+    |   PATH '(' qualifiedName ',' qualifiedName ')' //path (TREE,NODE)
+    |   RECOGNIZE '(' NODE ',' qualifiedName ')' //recognize (NODE,ext-rule-set)
+    |   EXPLODE '(' qualifiedName (',' expr)? ')' //explode (TREE,string-expression)
+    |   DROP '(' qualifiedName ',' qualifiedName ')' //drop (TREE, NODE)
+    //<boolean-expression>, ext-rule-set, <tree-expression> bunları da tanımlamak gerekir mi?
 ;    
     
 conflictspec
@@ -69,8 +72,11 @@ conflictspec
 primary
     : LPAREN expr RPAREN
     | literal
-    | IDENTIFIER
+    | qualifiedName
 ;
+qualifiedName
+    : IDENTIFIER ('.' IDENTIFIER)*
+    ;
 exprList : expr (',' expr)* ;   // arg list
 
 typeType
@@ -94,6 +100,7 @@ primitiveType
     | LONG
     | FLOAT
     | DOUBLE
+    | VOID
     ;
 
 complexType

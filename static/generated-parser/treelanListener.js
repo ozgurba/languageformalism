@@ -29,6 +29,15 @@ treelanListener.prototype.exitVarDecl = function(ctx) {
 };
 
 
+// Enter a parse tree produced by treelanParser#functionDecl.
+treelanListener.prototype.enterFunctionDecl = function(ctx) {
+};
+
+// Exit a parse tree produced by treelanParser#functionDecl.
+treelanListener.prototype.exitFunctionDecl = function(ctx) {
+};
+
+
 // Enter a parse tree produced by treelanParser#formalParameters.
 treelanListener.prototype.enterFormalParameters = function(ctx) {
 };
@@ -92,12 +101,30 @@ treelanListener.prototype.exitBuiltinfunction = function(ctx) {
 };
 
 
+// Enter a parse tree produced by treelanParser#conflictspec.
+treelanListener.prototype.enterConflictspec = function(ctx) {
+};
+
+// Exit a parse tree produced by treelanParser#conflictspec.
+treelanListener.prototype.exitConflictspec = function(ctx) {
+};
+
+
 // Enter a parse tree produced by treelanParser#primary.
 treelanListener.prototype.enterPrimary = function(ctx) {
 };
 
 // Exit a parse tree produced by treelanParser#primary.
 treelanListener.prototype.exitPrimary = function(ctx) {
+};
+
+
+// Enter a parse tree produced by treelanParser#qualifiedName.
+treelanListener.prototype.enterQualifiedName = function(ctx) {
+};
+
+// Exit a parse tree produced by treelanParser#qualifiedName.
+treelanListener.prototype.exitQualifiedName = function(ctx) {
 };
 
 
