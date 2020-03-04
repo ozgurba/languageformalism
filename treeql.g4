@@ -3,10 +3,10 @@ grammar treeql;
 
 expressions
     :
-    treeExpression '(' treeExpression ')'
+    treeQuery '(' treeQuery ')'
     ;
 
-treeExpression
+treeQuery
     :
     selectQuery
     | joinQuery
@@ -15,11 +15,13 @@ treeExpression
     ;
 selectQuery
     :
-    'SELECT' treeExpression 'FROM' selectorCondition
+    'SELECT' treeExpression 'FROM' treeQuery 'WHERE' selectorCondition
     ;
 joinQuery
     :
+    treeQuery 'JOIN' treeQuery 'ON' selectorCondition 
     ;
+
 mergeQuery
     :
     ;
@@ -27,7 +29,10 @@ explodeQuery
     :
     ;
 
-
+treeExpression
+    :
+    expression '.' expression
+    ;
 selectorCondition
     :
     booleanExpression
