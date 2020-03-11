@@ -1,37 +1,53 @@
 grammar treeql;
 
-
-expressions
+statements
     :
-    treeQuery '(' treeQuery ')'
+    definition+
+    | treeQuery
     ;
-
+definition
+    : typeType VARNAME ';'
+    ;
 treeQuery
     :
     selectQuery
     | joinQuery
     | mergeQuery
     | explodeQuery
+    LPAREN treeQuery RPAREN
     ;
 selectQuery
     :
-    'SELECT' treeExpression 'FROM' treeQuery 'WHERE' selectorCondition
+    SELECT treeExpression FROM treeQuery WHERE selectorCondition
     ;
 joinQuery
     :
-    treeQuery 'JOIN' treeQuery 'ON' selectorCondition 
+    JOIN treeQuery ',' treeQuery ON selectorCondition 
     ;
 
 mergeQuery
     :
-    ;
-explodeQuery
-    :
+    MERGE treeQuery ',' treeQuery conflictspec?
     ;
 
-treeExpression
+conflictspec
+    : CONFORMIFEQUAL
+    |   DERIVEALWAYS
+    |   DERIVEIFNOTEQUAL
+    |   TERMINATEIFNOTEQUAL
+    |   TERMINATE
+    |   OVERRIDE
+    |   EVALUATE
+;
+explodeQuery
     :
-    expression '.' expression
+    EXPLODE treeQuery
+    ;
+
+expressions
+    :
+    expressions '.' expressions
+    | expression
     ;
 selectorCondition
     :
@@ -43,8 +59,38 @@ booleanExpression
     ;
     expression
     :
-    ...
+    treeExpression
+    | stringExpression
     ;
+
+treeExpression
+    :
+    ;
+stringExpression
+    :
+    ;
+
+typeType
+    : (complexType | primitiveType) ('[' ']')*
+    ;
+    
+primitiveType
+    : BOOLEAN
+    | CHAR
+    | BYTE
+    | SHORT
+    | INT
+    | LONG
+    | FLOAT
+    | DOUBLE
+    ;
+
+complexType
+	:	LIST
+	|	TREE
+    |   NODE
+	|	STRING
+	;	
 
 numericLiteral
     : numericLiteralUnsigned | numericLiteralPositive | numericLiteralNegative
@@ -154,6 +200,93 @@ PN_CHARS_U
 VARNAME
     : ( PN_CHARS_U | DIGIT ) ( PN_CHARS_U | DIGIT | '\u00B7' | ('\u0300'..'\u036F') | ('\u203F'..'\u2040') )*
     ;
+
+    // Separators
+LPAREN:             '(';
+RPAREN:             ')';
+LBRACE:             '{';
+RBRACE:             '}';
+LBRACK:             '[';
+RBRACK:             ']';
+SEMI:               ';';
+COMMA:              ',';
+DOT:                '.';
+
+//    lexer grammar KnowExtLexer;
+// Keywords
+BOOLEAN:            'boolean';
+BYTE:               'byte';
+CHAR:               'char';
+CONFORMIFEQUAL:     'conformifequal';
+DERIVEALWAYS:       'derivealways';
+DERIVEIFNOTEQUAL:   'deriveifequal';
+TERMINATEIFNOTEQUAL:'terminateifnotequal';    
+TERMINATE:          'terminate';
+OVERRIDE:           'override';
+EVALUATE:           'evaluate';
+EXPLODE:            'explode';
+DROP:               'drop';
+ELSE:               'else';
+FLOAT:              'float';
+FOR:                'for';
+IF:                 'if';
+INT:                'int';
+JOIN:               'join';
+LIST:				'list';
+LONG:               'long';
+MERGE:              'merge';
+NODE:               'node';
+ON:                 'on';
+RECOGNIZE:          'recognize';
+SHORT:              'short';
+STRING:				'String';
+PATH:               'Path';
+TREE:				'Tree';
+UNION:				'union';
+SELECT:				'select';
+FROM:               'from';
+WHERE:              'where';
+ALIAS:				'as';
+ORDERBY:			'orderby';
+
+// Operators
+ASSIGN:             '=';
+GT:                 '>';
+LT:                 '<';
+BANG:               '!';
+TILDE:              '~';
+QUESTION:           '?';
+COLON:              ':';
+EQUAL:              '==';
+LE:                 '<=';
+GE:                 '>=';
+NOTEQUAL:           '!=';
+AND:                '&&';
+OR:                 '||';
+INC:                '++';
+DEC:                '--';
+ADD:                '+';
+SUB:                '-';
+MUL:                '*';
+DIV:                '/';
+BITAND:             '&';
+BITOR:              '|';
+CARET:              '^';
+MOD:                '%';
+
+ADD_ASSIGN:         '+=';
+SUB_ASSIGN:         '-=';
+MUL_ASSIGN:         '*=';
+DIV_ASSIGN:         '/=';
+AND_ASSIGN:         '&=';
+OR_ASSIGN:          '|=';
+XOR_ASSIGN:         '^=';
+MOD_ASSIGN:         '%=';
+LSHIFT_ASSIGN:      '<<=';
+RSHIFT_ASSIGN:      '>>=';
+URSHIFT_ASSIGN:     '>>>=';
+
+
 fragment
 PN_CHARS
     : PN_CHARS_U
