@@ -2,7 +2,7 @@ grammar treeql;
 
 stats
     :
-    definition* treeQuery
+    (definition)* treeQuery
     ;
 definition
     : typeType VAR_NAME ';' 
