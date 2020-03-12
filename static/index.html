@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>treelan on the Web</title>
+    <title>treeql on the Web</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script type="text/javascript" src="lib/require.js"></script> 
     <link rel="stylesheet" type="text/css" href="css/json-formatter.css">
@@ -10,12 +10,7 @@
 <div class="root"></div>
 <div id="inputs">
 <textarea id="code" rows="25" cols="100">
-    void main(){
-        String p="str"+((8+9)-7*5)/6;
-        Tree xmlTree;
-        int sum=15+16+17*3;
-        Tree selectedTree=select(xmlTree,xmlTree.treeNode.val==5);
-    }
+   select country.name from country
 </textarea>
 <br/>
 <button id="parse">Parse</button>
@@ -23,16 +18,16 @@
 <script type="text/javascript">
 
 var antlr4 = require('antlr4/index');
-var treelanLexer = require('generated-parser/treelanLexer');
-var treelanParser = require('generated-parser/treelanParser');
+var treeqlLexer = require('generated-parser/treeqlLexer');
+var treeqlParser = require('generated-parser/treeqlParser');
 var JSONFormatter=require('lib/json/json-formatter');
 
 document.getElementById("parse").addEventListener("click", function(){
     var input = document.getElementById("code").value;
     var chars = new antlr4.InputStream(input);
-    var lexer = new treelanLexer.treelanLexer(chars);
+    var lexer = new treeqlLexer.treeqlLexer(chars);
     var tokens  = new antlr4.CommonTokenStream(lexer);
-    var parser = new treelanParser.treelanParser(tokens);
+    var parser = new treeqlParser.treeqlParser(tokens);
     parser.buildParseTrees = true;
     var tree = parser.stats();
     console.log("Parsed: "+ tree);

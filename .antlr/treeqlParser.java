@@ -16,68 +16,63 @@ public class treeqlParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, INTEGER=3, DECIMAL=4, DOUBLE=5, INTEGER_POSITIVE=6, DECIMAL_POSITIVE=7, 
-		DOUBLE_POSITIVE=8, INTEGER_NEGATIVE=9, DECIMAL_NEGATIVE=10, DOUBLE_NEGATIVE=11, 
-		EXPONENT=12, STRING_LITERAL1=13, STRING_LITERAL2=14, STRING_LITERAL_LONG1=15, 
-		STRING_LITERAL_LONG2=16, ECHAR=17, NIL=18, ANON=19, PN_CHARS_U=20, VARNAME=21, 
-		LPAREN=22, RPAREN=23, LBRACE=24, RBRACE=25, LBRACK=26, RBRACK=27, SEMI=28, 
-		COMMA=29, DOT=30, BOOLEAN=31, BYTE=32, CHAR=33, CONFORMIFEQUAL=34, DERIVEALWAYS=35, 
-		DERIVEIFNOTEQUAL=36, TERMINATEIFNOTEQUAL=37, TERMINATE=38, OVERRIDE=39, 
-		EVALUATE=40, EXPLODE=41, DROP=42, ELSE=43, FLOAT=44, FOR=45, IF=46, INT=47, 
-		JOIN=48, LIST=49, LONG=50, MERGE=51, NODE=52, ON=53, RECOGNIZE=54, SHORT=55, 
-		STRING=56, PATH=57, TREE=58, UNION=59, SELECT=60, FROM=61, WHERE=62, ALIAS=63, 
-		ORDERBY=64, ASSIGN=65, GT=66, LT=67, BANG=68, TILDE=69, QUESTION=70, COLON=71, 
-		EQUAL=72, LE=73, GE=74, NOTEQUAL=75, AND=76, OR=77, INC=78, DEC=79, ADD=80, 
-		SUB=81, MUL=82, DIV=83, BITAND=84, BITOR=85, CARET=86, MOD=87, ADD_ASSIGN=88, 
-		SUB_ASSIGN=89, MUL_ASSIGN=90, DIV_ASSIGN=91, AND_ASSIGN=92, OR_ASSIGN=93, 
-		XOR_ASSIGN=94, MOD_ASSIGN=95, LSHIFT_ASSIGN=96, RSHIFT_ASSIGN=97, URSHIFT_ASSIGN=98, 
-		PN_PREFIX=99, PN_LOCAL=100, WS=101;
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, ALIAS=7, LPAREN=8, RPAREN=9, 
+		LBRACE=10, RBRACE=11, LBRACK=12, RBRACK=13, SEMI=14, COMMA=15, DOT=16, 
+		AS=17, BOOLEAN=18, BYTE=19, CHAR=20, DOUBLE=21, CONFORMIFEQUAL=22, DERIVEALWAYS=23, 
+		DERIVEIFNOTEQUAL=24, TERMINATEIFNOTEQUAL=25, TERMINATE=26, OVERRIDE=27, 
+		EVALUATE=28, EXPLODE=29, DROP=30, ELSE=31, FLOAT=32, FOR=33, IF=34, INT=35, 
+		JOIN=36, LIST=37, LONG=38, MERGE=39, NODE=40, ON=41, RECOGNIZE=42, SHORT=43, 
+		STRING=44, PATH=45, TREE=46, UNION=47, SELECT=48, FROM=49, WHERE=50, ORDERBY=51, 
+		ASSIGN=52, GT=53, LT=54, BANG=55, TILDE=56, QUESTION=57, COLON=58, EQUAL=59, 
+		LE=60, GE=61, NOTEQUAL=62, AND=63, OR=64, INC=65, DEC=66, ADD=67, SUB=68, 
+		MUL=69, DIV=70, BITAND=71, BITOR=72, CARET=73, MOD=74, ADD_ASSIGN=75, 
+		SUB_ASSIGN=76, MUL_ASSIGN=77, DIV_ASSIGN=78, AND_ASSIGN=79, OR_ASSIGN=80, 
+		XOR_ASSIGN=81, MOD_ASSIGN=82, LSHIFT_ASSIGN=83, RSHIFT_ASSIGN=84, URSHIFT_ASSIGN=85, 
+		VAR_NAME=86, CHARACTER=87, ESCAPE_CHARACTER=88, WS=89;
 	public static final int
-		RULE_statements = 0, RULE_definition = 1, RULE_treeQuery = 2, RULE_selectQuery = 3, 
+		RULE_stats = 0, RULE_definition = 1, RULE_treeQuery = 2, RULE_selectQuery = 3, 
 		RULE_joinQuery = 4, RULE_mergeQuery = 5, RULE_conflictspec = 6, RULE_explodeQuery = 7, 
-		RULE_expressions = 8, RULE_selectorCondition = 9, RULE_booleanExpression = 10, 
-		RULE_expression = 11, RULE_treeExpression = 12, RULE_stringExpression = 13, 
-		RULE_typeType = 14, RULE_primitiveType = 15, RULE_complexType = 16, RULE_numericLiteral = 17, 
-		RULE_numericLiteralUnsigned = 18, RULE_numericLiteralPositive = 19, RULE_numericLiteralNegative = 20, 
-		RULE_booleanLiteral = 21, RULE_string = 22;
+		RULE_rangeVariableDeclaration = 8, RULE_abstractTreeName = 9, RULE_expressions = 10, 
+		RULE_selectorCondition = 11, RULE_expression = 12, RULE_booleanExpression = 13, 
+		RULE_treeExpression = 14, RULE_stringExpression = 15, RULE_numberExpression = 16, 
+		RULE_typeType = 17, RULE_primitiveType = 18, RULE_complexType = 19, RULE_booleanLiteral = 20, 
+		RULE_comparisonOperator = 21, RULE_stringLiteral = 22;
 	public static final String[] ruleNames = {
-		"statements", "definition", "treeQuery", "selectQuery", "joinQuery", "mergeQuery", 
-		"conflictspec", "explodeQuery", "expressions", "selectorCondition", "booleanExpression", 
-		"expression", "treeExpression", "stringExpression", "typeType", "primitiveType", 
-		"complexType", "numericLiteral", "numericLiteralUnsigned", "numericLiteralPositive", 
-		"numericLiteralNegative", "booleanLiteral", "string"
+		"stats", "definition", "treeQuery", "selectQuery", "joinQuery", "mergeQuery", 
+		"conflictspec", "explodeQuery", "rangeVariableDeclaration", "abstractTreeName", 
+		"expressions", "selectorCondition", "expression", "booleanExpression", 
+		"treeExpression", "stringExpression", "numberExpression", "typeType", 
+		"primitiveType", "complexType", "booleanLiteral", "comparisonOperator", 
+		"stringLiteral"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, "'true'", "'false'", null, null, null, null, null, null, null, null, 
-		null, null, null, null, null, null, null, null, null, null, null, "'('", 
-		"')'", "'{'", "'}'", "'['", "']'", "';'", "','", "'.'", "'boolean'", "'byte'", 
-		"'char'", "'conformifequal'", "'derivealways'", "'deriveifequal'", "'terminateifnotequal'", 
-		"'terminate'", "'override'", "'evaluate'", "'explode'", "'drop'", "'else'", 
-		"'float'", "'for'", "'if'", "'int'", "'join'", "'list'", "'long'", "'merge'", 
-		"'node'", "'on'", "'recognize'", "'short'", "'String'", "'Path'", "'Tree'", 
-		"'union'", "'select'", "'from'", "'where'", "'as'", "'orderby'", "'='", 
-		"'>'", "'<'", "'!'", "'~'", "'?'", "':'", "'=='", "'<='", "'>='", "'!='", 
-		"'&&'", "'||'", "'++'", "'--'", "'+'", "'-'", "'*'", "'/'", "'&'", "'|'", 
-		"'^'", "'%'", "'+='", "'-='", "'*='", "'/='", "'&='", "'|='", "'^='", 
-		"'%='", "'<<='", "'>>='", "'>>>='"
+		null, "'true'", "'false'", "'<>'", "'''", "'\\'", "'\"'", null, "'('", 
+		"')'", "'{'", "'}'", "'['", "']'", "';'", "','", "'.'", "'as'", "'boolean'", 
+		"'byte'", "'char'", "'double'", "'conformifequal'", "'derivealways'", 
+		"'deriveifequal'", "'terminateifnotequal'", "'terminate'", "'override'", 
+		"'evaluate'", "'explode'", "'drop'", "'else'", "'float'", "'for'", "'if'", 
+		"'int'", "'join'", "'list'", "'long'", "'merge'", "'node'", "'on'", "'recognize'", 
+		"'short'", "'String'", "'Path'", "'Tree'", "'union'", "'select'", "'from'", 
+		"'where'", "'orderby'", "'='", "'>'", "'<'", "'!'", "'~'", "'?'", "':'", 
+		"'=='", "'<='", "'>='", "'!='", "'&&'", "'||'", "'++'", "'--'", "'+'", 
+		"'-'", "'*'", "'/'", "'&'", "'|'", "'^'", "'%'", "'+='", "'-='", "'*='", 
+		"'/='", "'&='", "'|='", "'^='", "'%='", "'<<='", "'>>='", "'>>>='"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, "INTEGER", "DECIMAL", "DOUBLE", "INTEGER_POSITIVE", 
-		"DECIMAL_POSITIVE", "DOUBLE_POSITIVE", "INTEGER_NEGATIVE", "DECIMAL_NEGATIVE", 
-		"DOUBLE_NEGATIVE", "EXPONENT", "STRING_LITERAL1", "STRING_LITERAL2", "STRING_LITERAL_LONG1", 
-		"STRING_LITERAL_LONG2", "ECHAR", "NIL", "ANON", "PN_CHARS_U", "VARNAME", 
-		"LPAREN", "RPAREN", "LBRACE", "RBRACE", "LBRACK", "RBRACK", "SEMI", "COMMA", 
-		"DOT", "BOOLEAN", "BYTE", "CHAR", "CONFORMIFEQUAL", "DERIVEALWAYS", "DERIVEIFNOTEQUAL", 
-		"TERMINATEIFNOTEQUAL", "TERMINATE", "OVERRIDE", "EVALUATE", "EXPLODE", 
-		"DROP", "ELSE", "FLOAT", "FOR", "IF", "INT", "JOIN", "LIST", "LONG", "MERGE", 
-		"NODE", "ON", "RECOGNIZE", "SHORT", "STRING", "PATH", "TREE", "UNION", 
-		"SELECT", "FROM", "WHERE", "ALIAS", "ORDERBY", "ASSIGN", "GT", "LT", "BANG", 
-		"TILDE", "QUESTION", "COLON", "EQUAL", "LE", "GE", "NOTEQUAL", "AND", 
-		"OR", "INC", "DEC", "ADD", "SUB", "MUL", "DIV", "BITAND", "BITOR", "CARET", 
-		"MOD", "ADD_ASSIGN", "SUB_ASSIGN", "MUL_ASSIGN", "DIV_ASSIGN", "AND_ASSIGN", 
-		"OR_ASSIGN", "XOR_ASSIGN", "MOD_ASSIGN", "LSHIFT_ASSIGN", "RSHIFT_ASSIGN", 
-		"URSHIFT_ASSIGN", "PN_PREFIX", "PN_LOCAL", "WS"
+		null, null, null, null, null, null, null, "ALIAS", "LPAREN", "RPAREN", 
+		"LBRACE", "RBRACE", "LBRACK", "RBRACK", "SEMI", "COMMA", "DOT", "AS", 
+		"BOOLEAN", "BYTE", "CHAR", "DOUBLE", "CONFORMIFEQUAL", "DERIVEALWAYS", 
+		"DERIVEIFNOTEQUAL", "TERMINATEIFNOTEQUAL", "TERMINATE", "OVERRIDE", "EVALUATE", 
+		"EXPLODE", "DROP", "ELSE", "FLOAT", "FOR", "IF", "INT", "JOIN", "LIST", 
+		"LONG", "MERGE", "NODE", "ON", "RECOGNIZE", "SHORT", "STRING", "PATH", 
+		"TREE", "UNION", "SELECT", "FROM", "WHERE", "ORDERBY", "ASSIGN", "GT", 
+		"LT", "BANG", "TILDE", "QUESTION", "COLON", "EQUAL", "LE", "GE", "NOTEQUAL", 
+		"AND", "OR", "INC", "DEC", "ADD", "SUB", "MUL", "DIV", "BITAND", "BITOR", 
+		"CARET", "MOD", "ADD_ASSIGN", "SUB_ASSIGN", "MUL_ASSIGN", "DIV_ASSIGN", 
+		"AND_ASSIGN", "OR_ASSIGN", "XOR_ASSIGN", "MOD_ASSIGN", "LSHIFT_ASSIGN", 
+		"RSHIFT_ASSIGN", "URSHIFT_ASSIGN", "VAR_NAME", "CHARACTER", "ESCAPE_CHARACTER", 
+		"WS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -128,72 +123,45 @@ public class treeqlParser extends Parser {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
-	public static class StatementsContext extends ParserRuleContext {
+	public static class StatsContext extends ParserRuleContext {
+		public TreeQueryContext treeQuery() {
+			return getRuleContext(TreeQueryContext.class,0);
+		}
 		public List<DefinitionContext> definition() {
 			return getRuleContexts(DefinitionContext.class);
 		}
 		public DefinitionContext definition(int i) {
 			return getRuleContext(DefinitionContext.class,i);
 		}
-		public TreeQueryContext treeQuery() {
-			return getRuleContext(TreeQueryContext.class,0);
-		}
-		public StatementsContext(ParserRuleContext parent, int invokingState) {
+		public StatsContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_statements; }
+		@Override public int getRuleIndex() { return RULE_stats; }
 	}
 
-	public final StatementsContext statements() throws RecognitionException {
-		StatementsContext _localctx = new StatementsContext(_ctx, getState());
-		enterRule(_localctx, 0, RULE_statements);
+	public final StatsContext stats() throws RecognitionException {
+		StatsContext _localctx = new StatsContext(_ctx, getState());
+		enterRule(_localctx, 0, RULE_stats);
 		int _la;
 		try {
-			setState(52);
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(49);
 			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case DOUBLE:
-			case BOOLEAN:
-			case BYTE:
-			case CHAR:
-			case FLOAT:
-			case INT:
-			case LIST:
-			case LONG:
-			case NODE:
-			case SHORT:
-			case STRING:
-			case TREE:
-				enterOuterAlt(_localctx, 1);
+			_la = _input.LA(1);
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BOOLEAN) | (1L << BYTE) | (1L << CHAR) | (1L << DOUBLE) | (1L << FLOAT) | (1L << INT) | (1L << LIST) | (1L << LONG) | (1L << NODE) | (1L << SHORT) | (1L << STRING) | (1L << TREE))) != 0)) {
 				{
-				setState(47); 
+				{
+				setState(46);
+				definition();
+				}
+				}
+				setState(51);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				do {
-					{
-					{
-					setState(46);
-					definition();
-					}
-					}
-					setState(49); 
-					_errHandler.sync(this);
-					_la = _input.LA(1);
-				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << DOUBLE) | (1L << BOOLEAN) | (1L << BYTE) | (1L << CHAR) | (1L << FLOAT) | (1L << INT) | (1L << LIST) | (1L << LONG) | (1L << NODE) | (1L << SHORT) | (1L << STRING) | (1L << TREE))) != 0) );
-				}
-				break;
-			case EXPLODE:
-			case JOIN:
-			case MERGE:
-			case SELECT:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(51);
-				treeQuery();
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
+			}
+			setState(52);
+			treeQuery();
 			}
 		}
 		catch (RecognitionException re) {
@@ -211,7 +179,7 @@ public class treeqlParser extends Parser {
 		public TypeTypeContext typeType() {
 			return getRuleContext(TypeTypeContext.class,0);
 		}
-		public TerminalNode VARNAME() { return getToken(treeqlParser.VARNAME, 0); }
+		public TerminalNode VAR_NAME() { return getToken(treeqlParser.VAR_NAME, 0); }
 		public DefinitionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -227,7 +195,7 @@ public class treeqlParser extends Parser {
 			setState(54);
 			typeType();
 			setState(55);
-			match(VARNAME);
+			match(VAR_NAME);
 			setState(56);
 			match(SEMI);
 			}
@@ -261,6 +229,9 @@ public class treeqlParser extends Parser {
 			return getRuleContext(TreeQueryContext.class,0);
 		}
 		public TerminalNode RPAREN() { return getToken(treeqlParser.RPAREN, 0); }
+		public RangeVariableDeclarationContext rangeVariableDeclaration() {
+			return getRuleContext(RangeVariableDeclarationContext.class,0);
+		}
 		public TreeQueryContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -271,7 +242,7 @@ public class treeqlParser extends Parser {
 		TreeQueryContext _localctx = new TreeQueryContext(_ctx, getState());
 		enterRule(_localctx, 4, RULE_treeQuery);
 		try {
-			setState(66);
+			setState(67);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case SELECT:
@@ -306,6 +277,13 @@ public class treeqlParser extends Parser {
 				treeQuery();
 				setState(64);
 				match(RPAREN);
+				}
+				break;
+			case VAR_NAME:
+				enterOuterAlt(_localctx, 5);
+				{
+				setState(66);
+				rangeVariableDeclaration();
 				}
 				break;
 			default:
@@ -348,18 +326,26 @@ public class treeqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(68);
-			match(SELECT);
 			setState(69);
-			treeExpression();
+			match(SELECT);
 			setState(70);
-			match(FROM);
+			treeExpression();
 			setState(71);
-			treeQuery();
+			match(FROM);
 			setState(72);
-			match(WHERE);
-			setState(73);
-			selectorCondition();
+			treeQuery();
+			setState(75);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
+			case 1:
+				{
+				setState(73);
+				match(WHERE);
+				setState(74);
+				selectorCondition();
+				}
+				break;
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -397,17 +383,17 @@ public class treeqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(75);
-			match(JOIN);
-			setState(76);
-			treeQuery();
 			setState(77);
-			match(COMMA);
+			match(JOIN);
 			setState(78);
 			treeQuery();
 			setState(79);
-			match(ON);
+			match(COMMA);
 			setState(80);
+			treeQuery();
+			setState(81);
+			match(ON);
+			setState(82);
 			selectorCondition();
 			}
 		}
@@ -445,20 +431,20 @@ public class treeqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(82);
-			match(MERGE);
-			setState(83);
-			treeQuery();
 			setState(84);
-			match(COMMA);
+			match(MERGE);
 			setState(85);
 			treeQuery();
+			setState(86);
+			match(COMMA);
 			setState(87);
+			treeQuery();
+			setState(89);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
 			case 1:
 				{
-				setState(86);
+				setState(88);
 				conflictspec();
 				}
 				break;
@@ -497,7 +483,7 @@ public class treeqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(89);
+			setState(91);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << CONFORMIFEQUAL) | (1L << DERIVEALWAYS) | (1L << DERIVEIFNOTEQUAL) | (1L << TERMINATEIFNOTEQUAL) | (1L << TERMINATE) | (1L << OVERRIDE) | (1L << EVALUATE))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -537,10 +523,95 @@ public class treeqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(91);
+			setState(93);
 			match(EXPLODE);
-			setState(92);
+			setState(94);
 			treeQuery();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class RangeVariableDeclarationContext extends ParserRuleContext {
+		public AbstractTreeNameContext abstractTreeName() {
+			return getRuleContext(AbstractTreeNameContext.class,0);
+		}
+		public List<TerminalNode> AS() { return getTokens(treeqlParser.AS); }
+		public TerminalNode AS(int i) {
+			return getToken(treeqlParser.AS, i);
+		}
+		public List<TerminalNode> ALIAS() { return getTokens(treeqlParser.ALIAS); }
+		public TerminalNode ALIAS(int i) {
+			return getToken(treeqlParser.ALIAS, i);
+		}
+		public RangeVariableDeclarationContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_rangeVariableDeclaration; }
+	}
+
+	public final RangeVariableDeclarationContext rangeVariableDeclaration() throws RecognitionException {
+		RangeVariableDeclarationContext _localctx = new RangeVariableDeclarationContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_rangeVariableDeclaration);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(96);
+			abstractTreeName();
+			setState(99); 
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			do {
+				{
+				{
+				setState(97);
+				match(AS);
+				setState(98);
+				match(ALIAS);
+				}
+				}
+				setState(101); 
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			} while ( _la==AS );
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class AbstractTreeNameContext extends ParserRuleContext {
+		public TerminalNode VAR_NAME() { return getToken(treeqlParser.VAR_NAME, 0); }
+		public AbstractTreeNameContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_abstractTreeName; }
+	}
+
+	public final AbstractTreeNameContext abstractTreeName() throws RecognitionException {
+		AbstractTreeNameContext _localctx = new AbstractTreeNameContext(_ctx, getState());
+		enterRule(_localctx, 18, RULE_abstractTreeName);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(103);
+			match(VAR_NAME);
 			}
 		}
 		catch (RecognitionException re) {
@@ -579,20 +650,20 @@ public class treeqlParser extends Parser {
 		int _parentState = getState();
 		ExpressionsContext _localctx = new ExpressionsContext(_ctx, _parentState);
 		ExpressionsContext _prevctx = _localctx;
-		int _startState = 16;
-		enterRecursionRule(_localctx, 16, RULE_expressions, _p);
+		int _startState = 20;
+		enterRecursionRule(_localctx, 20, RULE_expressions, _p);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
 			{
-			setState(95);
+			setState(106);
 			expression();
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(102);
+			setState(113);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
@@ -601,18 +672,18 @@ public class treeqlParser extends Parser {
 					{
 					_localctx = new ExpressionsContext(_parentctx, _parentState);
 					pushNewRecursionContext(_localctx, _startState, RULE_expressions);
-					setState(97);
+					setState(108);
 					if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-					setState(98);
+					setState(109);
 					match(DOT);
-					setState(99);
+					setState(110);
 					expressions(3);
 					}
 					} 
 				}
-				setState(104);
+				setState(115);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
 			}
 			}
 		}
@@ -639,50 +710,12 @@ public class treeqlParser extends Parser {
 
 	public final SelectorConditionContext selectorCondition() throws RecognitionException {
 		SelectorConditionContext _localctx = new SelectorConditionContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_selectorCondition);
+		enterRule(_localctx, 22, RULE_selectorCondition);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(105);
+			setState(116);
 			booleanExpression();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class BooleanExpressionContext extends ParserRuleContext {
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public BooleanExpressionContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_booleanExpression; }
-	}
-
-	public final BooleanExpressionContext booleanExpression() throws RecognitionException {
-		BooleanExpressionContext _localctx = new BooleanExpressionContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_booleanExpression);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(107);
-			expression();
-			setState(108);
-			match(EQUAL);
-			setState(109);
-			expression();
 			}
 		}
 		catch (RecognitionException re) {
@@ -711,22 +744,22 @@ public class treeqlParser extends Parser {
 
 	public final ExpressionContext expression() throws RecognitionException {
 		ExpressionContext _localctx = new ExpressionContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_expression);
+		enterRule(_localctx, 24, RULE_expression);
 		try {
-			setState(113);
+			setState(120);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(111);
+				setState(118);
 				treeExpression();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(112);
+				setState(119);
 				stringExpression();
 				}
 				break;
@@ -743,7 +776,87 @@ public class treeqlParser extends Parser {
 		return _localctx;
 	}
 
+	public static class BooleanExpressionContext extends ParserRuleContext {
+		public List<TreeExpressionContext> treeExpression() {
+			return getRuleContexts(TreeExpressionContext.class);
+		}
+		public TreeExpressionContext treeExpression(int i) {
+			return getRuleContext(TreeExpressionContext.class,i);
+		}
+		public BooleanLiteralContext booleanLiteral() {
+			return getRuleContext(BooleanLiteralContext.class,0);
+		}
+		public ComparisonOperatorContext comparisonOperator() {
+			return getRuleContext(ComparisonOperatorContext.class,0);
+		}
+		public StringExpressionContext stringExpression() {
+			return getRuleContext(StringExpressionContext.class,0);
+		}
+		public NumberExpressionContext numberExpression() {
+			return getRuleContext(NumberExpressionContext.class,0);
+		}
+		public BooleanExpressionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_booleanExpression; }
+	}
+
+	public final BooleanExpressionContext booleanExpression() throws RecognitionException {
+		BooleanExpressionContext _localctx = new BooleanExpressionContext(_ctx, getState());
+		enterRule(_localctx, 26, RULE_booleanExpression);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(122);
+			treeExpression();
+			setState(123);
+			match(EQUAL);
+			setState(124);
+			booleanLiteral();
+			setState(125);
+			treeExpression();
+			setState(126);
+			comparisonOperator();
+			setState(130);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
+			case 1:
+				{
+				setState(127);
+				treeExpression();
+				}
+				break;
+			case 2:
+				{
+				setState(128);
+				stringExpression();
+				}
+				break;
+			case 3:
+				{
+				setState(129);
+				numberExpression();
+				}
+				break;
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
 	public static class TreeExpressionContext extends ParserRuleContext {
+		public TerminalNode VAR_NAME() { return getToken(treeqlParser.VAR_NAME, 0); }
+		public AbstractTreeNameContext abstractTreeName() {
+			return getRuleContext(AbstractTreeNameContext.class,0);
+		}
 		public TreeExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -752,10 +865,36 @@ public class treeqlParser extends Parser {
 
 	public final TreeExpressionContext treeExpression() throws RecognitionException {
 		TreeExpressionContext _localctx = new TreeExpressionContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_treeExpression);
+		enterRule(_localctx, 28, RULE_treeExpression);
 		try {
-			enterOuterAlt(_localctx, 1);
-			{
+			setState(138);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(132);
+				match(MUL);
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(133);
+				match(VAR_NAME);
+				}
+				break;
+			case 3:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(134);
+				abstractTreeName();
+				setState(135);
+				match(DOT);
+				setState(136);
+				match(VAR_NAME);
+				}
+				break;
 			}
 		}
 		catch (RecognitionException re) {
@@ -778,7 +917,33 @@ public class treeqlParser extends Parser {
 
 	public final StringExpressionContext stringExpression() throws RecognitionException {
 		StringExpressionContext _localctx = new StringExpressionContext(_ctx, getState());
-		enterRule(_localctx, 26, RULE_stringExpression);
+		enterRule(_localctx, 30, RULE_stringExpression);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class NumberExpressionContext extends ParserRuleContext {
+		public NumberExpressionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_numberExpression; }
+	}
+
+	public final NumberExpressionContext numberExpression() throws RecognitionException {
+		NumberExpressionContext _localctx = new NumberExpressionContext(_ctx, getState());
+		enterRule(_localctx, 32, RULE_numberExpression);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
@@ -810,12 +975,12 @@ public class treeqlParser extends Parser {
 
 	public final TypeTypeContext typeType() throws RecognitionException {
 		TypeTypeContext _localctx = new TypeTypeContext(_ctx, getState());
-		enterRule(_localctx, 28, RULE_typeType);
+		enterRule(_localctx, 34, RULE_typeType);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(121);
+			setState(146);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case LIST:
@@ -823,39 +988,39 @@ public class treeqlParser extends Parser {
 			case STRING:
 			case TREE:
 				{
-				setState(119);
+				setState(144);
 				complexType();
 				}
 				break;
-			case DOUBLE:
 			case BOOLEAN:
 			case BYTE:
 			case CHAR:
+			case DOUBLE:
 			case FLOAT:
 			case INT:
 			case LONG:
 			case SHORT:
 				{
-				setState(120);
+				setState(145);
 				primitiveType();
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
-			setState(127);
+			setState(152);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==LBRACK) {
 				{
 				{
-				setState(123);
+				setState(148);
 				match(LBRACK);
-				setState(124);
+				setState(149);
 				match(RBRACK);
 				}
 				}
-				setState(129);
+				setState(154);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -889,14 +1054,14 @@ public class treeqlParser extends Parser {
 
 	public final PrimitiveTypeContext primitiveType() throws RecognitionException {
 		PrimitiveTypeContext _localctx = new PrimitiveTypeContext(_ctx, getState());
-		enterRule(_localctx, 30, RULE_primitiveType);
+		enterRule(_localctx, 36, RULE_primitiveType);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(130);
+			setState(155);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << DOUBLE) | (1L << BOOLEAN) | (1L << BYTE) | (1L << CHAR) | (1L << FLOAT) | (1L << INT) | (1L << LONG) | (1L << SHORT))) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BOOLEAN) | (1L << BYTE) | (1L << CHAR) | (1L << DOUBLE) | (1L << FLOAT) | (1L << INT) | (1L << LONG) | (1L << SHORT))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -930,199 +1095,14 @@ public class treeqlParser extends Parser {
 
 	public final ComplexTypeContext complexType() throws RecognitionException {
 		ComplexTypeContext _localctx = new ComplexTypeContext(_ctx, getState());
-		enterRule(_localctx, 32, RULE_complexType);
+		enterRule(_localctx, 38, RULE_complexType);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(132);
+			setState(157);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << LIST) | (1L << NODE) | (1L << STRING) | (1L << TREE))) != 0)) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class NumericLiteralContext extends ParserRuleContext {
-		public NumericLiteralUnsignedContext numericLiteralUnsigned() {
-			return getRuleContext(NumericLiteralUnsignedContext.class,0);
-		}
-		public NumericLiteralPositiveContext numericLiteralPositive() {
-			return getRuleContext(NumericLiteralPositiveContext.class,0);
-		}
-		public NumericLiteralNegativeContext numericLiteralNegative() {
-			return getRuleContext(NumericLiteralNegativeContext.class,0);
-		}
-		public NumericLiteralContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_numericLiteral; }
-	}
-
-	public final NumericLiteralContext numericLiteral() throws RecognitionException {
-		NumericLiteralContext _localctx = new NumericLiteralContext(_ctx, getState());
-		enterRule(_localctx, 34, RULE_numericLiteral);
-		try {
-			setState(137);
-			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case INTEGER:
-			case DECIMAL:
-			case DOUBLE:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(134);
-				numericLiteralUnsigned();
-				}
-				break;
-			case INTEGER_POSITIVE:
-			case DECIMAL_POSITIVE:
-			case DOUBLE_POSITIVE:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(135);
-				numericLiteralPositive();
-				}
-				break;
-			case INTEGER_NEGATIVE:
-			case DECIMAL_NEGATIVE:
-			case DOUBLE_NEGATIVE:
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(136);
-				numericLiteralNegative();
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class NumericLiteralUnsignedContext extends ParserRuleContext {
-		public TerminalNode INTEGER() { return getToken(treeqlParser.INTEGER, 0); }
-		public TerminalNode DECIMAL() { return getToken(treeqlParser.DECIMAL, 0); }
-		public TerminalNode DOUBLE() { return getToken(treeqlParser.DOUBLE, 0); }
-		public NumericLiteralUnsignedContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_numericLiteralUnsigned; }
-	}
-
-	public final NumericLiteralUnsignedContext numericLiteralUnsigned() throws RecognitionException {
-		NumericLiteralUnsignedContext _localctx = new NumericLiteralUnsignedContext(_ctx, getState());
-		enterRule(_localctx, 36, RULE_numericLiteralUnsigned);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(139);
-			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << INTEGER) | (1L << DECIMAL) | (1L << DOUBLE))) != 0)) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class NumericLiteralPositiveContext extends ParserRuleContext {
-		public TerminalNode INTEGER_POSITIVE() { return getToken(treeqlParser.INTEGER_POSITIVE, 0); }
-		public TerminalNode DECIMAL_POSITIVE() { return getToken(treeqlParser.DECIMAL_POSITIVE, 0); }
-		public TerminalNode DOUBLE_POSITIVE() { return getToken(treeqlParser.DOUBLE_POSITIVE, 0); }
-		public NumericLiteralPositiveContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_numericLiteralPositive; }
-	}
-
-	public final NumericLiteralPositiveContext numericLiteralPositive() throws RecognitionException {
-		NumericLiteralPositiveContext _localctx = new NumericLiteralPositiveContext(_ctx, getState());
-		enterRule(_localctx, 38, RULE_numericLiteralPositive);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(141);
-			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << INTEGER_POSITIVE) | (1L << DECIMAL_POSITIVE) | (1L << DOUBLE_POSITIVE))) != 0)) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class NumericLiteralNegativeContext extends ParserRuleContext {
-		public TerminalNode INTEGER_NEGATIVE() { return getToken(treeqlParser.INTEGER_NEGATIVE, 0); }
-		public TerminalNode DECIMAL_NEGATIVE() { return getToken(treeqlParser.DECIMAL_NEGATIVE, 0); }
-		public TerminalNode DOUBLE_NEGATIVE() { return getToken(treeqlParser.DOUBLE_NEGATIVE, 0); }
-		public NumericLiteralNegativeContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_numericLiteralNegative; }
-	}
-
-	public final NumericLiteralNegativeContext numericLiteralNegative() throws RecognitionException {
-		NumericLiteralNegativeContext _localctx = new NumericLiteralNegativeContext(_ctx, getState());
-		enterRule(_localctx, 40, RULE_numericLiteralNegative);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(143);
-			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << INTEGER_NEGATIVE) | (1L << DECIMAL_NEGATIVE) | (1L << DOUBLE_NEGATIVE))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -1152,12 +1132,12 @@ public class treeqlParser extends Parser {
 
 	public final BooleanLiteralContext booleanLiteral() throws RecognitionException {
 		BooleanLiteralContext _localctx = new BooleanLiteralContext(_ctx, getState());
-		enterRule(_localctx, 42, RULE_booleanLiteral);
+		enterRule(_localctx, 40, RULE_booleanLiteral);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(145);
+			setState(159);
 			_la = _input.LA(1);
 			if ( !(_la==T__0 || _la==T__1) ) {
 			_errHandler.recoverInline(this);
@@ -1180,25 +1160,23 @@ public class treeqlParser extends Parser {
 		return _localctx;
 	}
 
-	public static class StringContext extends ParserRuleContext {
-		public TerminalNode STRING_LITERAL1() { return getToken(treeqlParser.STRING_LITERAL1, 0); }
-		public TerminalNode STRING_LITERAL2() { return getToken(treeqlParser.STRING_LITERAL2, 0); }
-		public StringContext(ParserRuleContext parent, int invokingState) {
+	public static class ComparisonOperatorContext extends ParserRuleContext {
+		public ComparisonOperatorContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_string; }
+		@Override public int getRuleIndex() { return RULE_comparisonOperator; }
 	}
 
-	public final StringContext string() throws RecognitionException {
-		StringContext _localctx = new StringContext(_ctx, getState());
-		enterRule(_localctx, 44, RULE_string);
+	public final ComparisonOperatorContext comparisonOperator() throws RecognitionException {
+		ComparisonOperatorContext _localctx = new ComparisonOperatorContext(_ctx, getState());
+		enterRule(_localctx, 42, RULE_comparisonOperator);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(147);
+			setState(161);
 			_la = _input.LA(1);
-			if ( !(_la==STRING_LITERAL1 || _la==STRING_LITERAL2) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__2) | (1L << ASSIGN) | (1L << GT) | (1L << LT) | (1L << LE) | (1L << GE))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -1219,9 +1197,67 @@ public class treeqlParser extends Parser {
 		return _localctx;
 	}
 
+	public static class StringLiteralContext extends ParserRuleContext {
+		public StringLiteralContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_stringLiteral; }
+	}
+
+	public final StringLiteralContext stringLiteral() throws RecognitionException {
+		StringLiteralContext _localctx = new StringLiteralContext(_ctx, getState());
+		enterRule(_localctx, 44, RULE_stringLiteral);
+		int _la;
+		try {
+			int _alt;
+			enterOuterAlt(_localctx, 1);
+			{
+			{
+			setState(163);
+			match(T__3);
+			setState(167);
+			_errHandler.sync(this);
+			_alt = getInterpreter().adaptivePredict(_input,11,_ctx);
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					{
+					{
+					setState(164);
+					_la = _input.LA(1);
+					if ( _la <= 0 || (_la==T__4 || _la==T__5) ) {
+					_errHandler.recoverInline(this);
+					}
+					else {
+						if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+						_errHandler.reportMatch(this);
+						consume();
+					}
+					}
+					} 
+				}
+				setState(169);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,11,_ctx);
+			}
+			setState(170);
+			match(T__3);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
-		case 8:
+		case 10:
 			return expressions_sempred((ExpressionsContext)_localctx, predIndex);
 		}
 		return true;
@@ -1235,45 +1271,55 @@ public class treeqlParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3g\u0098\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3[\u00af\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
-		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\3\2\6\2\62"+
-		"\n\2\r\2\16\2\63\3\2\5\2\67\n\2\3\3\3\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3"+
-		"\4\3\4\3\4\5\4E\n\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3"+
-		"\6\3\6\3\7\3\7\3\7\3\7\3\7\5\7Z\n\7\3\b\3\b\3\t\3\t\3\t\3\n\3\n\3\n\3"+
-		"\n\3\n\3\n\7\ng\n\n\f\n\16\nj\13\n\3\13\3\13\3\f\3\f\3\f\3\f\3\r\3\r\5"+
-		"\rt\n\r\3\16\3\16\3\17\3\17\3\20\3\20\5\20|\n\20\3\20\3\20\7\20\u0080"+
-		"\n\20\f\20\16\20\u0083\13\20\3\21\3\21\3\22\3\22\3\23\3\23\3\23\5\23\u008c"+
-		"\n\23\3\24\3\24\3\25\3\25\3\26\3\26\3\27\3\27\3\30\3\30\3\30\2\3\22\31"+
-		"\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\2\n\3\2$*\b\2\7\7!#."+
-		".\61\61\64\6499\6\2\63\63\66\66::<<\3\2\5\7\3\2\b\n\3\2\13\r\3\2\3\4\3"+
-		"\2\17\20\2\u008c\2\66\3\2\2\2\48\3\2\2\2\6D\3\2\2\2\bF\3\2\2\2\nM\3\2"+
-		"\2\2\fT\3\2\2\2\16[\3\2\2\2\20]\3\2\2\2\22`\3\2\2\2\24k\3\2\2\2\26m\3"+
-		"\2\2\2\30s\3\2\2\2\32u\3\2\2\2\34w\3\2\2\2\36{\3\2\2\2 \u0084\3\2\2\2"+
-		"\"\u0086\3\2\2\2$\u008b\3\2\2\2&\u008d\3\2\2\2(\u008f\3\2\2\2*\u0091\3"+
-		"\2\2\2,\u0093\3\2\2\2.\u0095\3\2\2\2\60\62\5\4\3\2\61\60\3\2\2\2\62\63"+
-		"\3\2\2\2\63\61\3\2\2\2\63\64\3\2\2\2\64\67\3\2\2\2\65\67\5\6\4\2\66\61"+
-		"\3\2\2\2\66\65\3\2\2\2\67\3\3\2\2\289\5\36\20\29:\7\27\2\2:;\7\36\2\2"+
-		";\5\3\2\2\2<E\5\b\5\2=E\5\n\6\2>E\5\f\7\2?@\5\20\t\2@A\7\30\2\2AB\5\6"+
-		"\4\2BC\7\31\2\2CE\3\2\2\2D<\3\2\2\2D=\3\2\2\2D>\3\2\2\2D?\3\2\2\2E\7\3"+
-		"\2\2\2FG\7>\2\2GH\5\32\16\2HI\7?\2\2IJ\5\6\4\2JK\7@\2\2KL\5\24\13\2L\t"+
-		"\3\2\2\2MN\7\62\2\2NO\5\6\4\2OP\7\37\2\2PQ\5\6\4\2QR\7\67\2\2RS\5\24\13"+
-		"\2S\13\3\2\2\2TU\7\65\2\2UV\5\6\4\2VW\7\37\2\2WY\5\6\4\2XZ\5\16\b\2YX"+
-		"\3\2\2\2YZ\3\2\2\2Z\r\3\2\2\2[\\\t\2\2\2\\\17\3\2\2\2]^\7+\2\2^_\5\6\4"+
-		"\2_\21\3\2\2\2`a\b\n\1\2ab\5\30\r\2bh\3\2\2\2cd\f\4\2\2de\7 \2\2eg\5\22"+
-		"\n\5fc\3\2\2\2gj\3\2\2\2hf\3\2\2\2hi\3\2\2\2i\23\3\2\2\2jh\3\2\2\2kl\5"+
-		"\26\f\2l\25\3\2\2\2mn\5\30\r\2no\7J\2\2op\5\30\r\2p\27\3\2\2\2qt\5\32"+
-		"\16\2rt\5\34\17\2sq\3\2\2\2sr\3\2\2\2t\31\3\2\2\2uv\3\2\2\2v\33\3\2\2"+
-		"\2wx\3\2\2\2x\35\3\2\2\2y|\5\"\22\2z|\5 \21\2{y\3\2\2\2{z\3\2\2\2|\u0081"+
-		"\3\2\2\2}~\7\34\2\2~\u0080\7\35\2\2\177}\3\2\2\2\u0080\u0083\3\2\2\2\u0081"+
-		"\177\3\2\2\2\u0081\u0082\3\2\2\2\u0082\37\3\2\2\2\u0083\u0081\3\2\2\2"+
-		"\u0084\u0085\t\3\2\2\u0085!\3\2\2\2\u0086\u0087\t\4\2\2\u0087#\3\2\2\2"+
-		"\u0088\u008c\5&\24\2\u0089\u008c\5(\25\2\u008a\u008c\5*\26\2\u008b\u0088"+
-		"\3\2\2\2\u008b\u0089\3\2\2\2\u008b\u008a\3\2\2\2\u008c%\3\2\2\2\u008d"+
-		"\u008e\t\5\2\2\u008e\'\3\2\2\2\u008f\u0090\t\6\2\2\u0090)\3\2\2\2\u0091"+
-		"\u0092\t\7\2\2\u0092+\3\2\2\2\u0093\u0094\t\b\2\2\u0094-\3\2\2\2\u0095"+
-		"\u0096\t\t\2\2\u0096/\3\2\2\2\13\63\66DYhs{\u0081\u008b";
+		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\3\2\7\2\62"+
+		"\n\2\f\2\16\2\65\13\2\3\2\3\2\3\3\3\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4"+
+		"\3\4\3\4\3\4\5\4F\n\4\3\5\3\5\3\5\3\5\3\5\3\5\5\5N\n\5\3\6\3\6\3\6\3\6"+
+		"\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\5\7\\\n\7\3\b\3\b\3\t\3\t\3\t\3\n\3\n"+
+		"\3\n\6\nf\n\n\r\n\16\ng\3\13\3\13\3\f\3\f\3\f\3\f\3\f\3\f\7\fr\n\f\f\f"+
+		"\16\fu\13\f\3\r\3\r\3\16\3\16\5\16{\n\16\3\17\3\17\3\17\3\17\3\17\3\17"+
+		"\3\17\3\17\5\17\u0085\n\17\3\20\3\20\3\20\3\20\3\20\3\20\5\20\u008d\n"+
+		"\20\3\21\3\21\3\22\3\22\3\23\3\23\5\23\u0095\n\23\3\23\3\23\7\23\u0099"+
+		"\n\23\f\23\16\23\u009c\13\23\3\24\3\24\3\25\3\25\3\26\3\26\3\27\3\27\3"+
+		"\30\3\30\7\30\u00a8\n\30\f\30\16\30\u00ab\13\30\3\30\3\30\3\30\2\3\26"+
+		"\31\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\2\b\3\2\30\36\7\2"+
+		"\24\27\"\"%%((--\6\2\'\'**..\60\60\3\2\3\4\5\2\5\5\668>?\3\2\7\b\2\u00a8"+
+		"\2\63\3\2\2\2\48\3\2\2\2\6E\3\2\2\2\bG\3\2\2\2\nO\3\2\2\2\fV\3\2\2\2\16"+
+		"]\3\2\2\2\20_\3\2\2\2\22b\3\2\2\2\24i\3\2\2\2\26k\3\2\2\2\30v\3\2\2\2"+
+		"\32z\3\2\2\2\34|\3\2\2\2\36\u008c\3\2\2\2 \u008e\3\2\2\2\"\u0090\3\2\2"+
+		"\2$\u0094\3\2\2\2&\u009d\3\2\2\2(\u009f\3\2\2\2*\u00a1\3\2\2\2,\u00a3"+
+		"\3\2\2\2.\u00a5\3\2\2\2\60\62\5\4\3\2\61\60\3\2\2\2\62\65\3\2\2\2\63\61"+
+		"\3\2\2\2\63\64\3\2\2\2\64\66\3\2\2\2\65\63\3\2\2\2\66\67\5\6\4\2\67\3"+
+		"\3\2\2\289\5$\23\29:\7X\2\2:;\7\20\2\2;\5\3\2\2\2<F\5\b\5\2=F\5\n\6\2"+
+		">F\5\f\7\2?@\5\20\t\2@A\7\n\2\2AB\5\6\4\2BC\7\13\2\2CF\3\2\2\2DF\5\22"+
+		"\n\2E<\3\2\2\2E=\3\2\2\2E>\3\2\2\2E?\3\2\2\2ED\3\2\2\2F\7\3\2\2\2GH\7"+
+		"\62\2\2HI\5\36\20\2IJ\7\63\2\2JM\5\6\4\2KL\7\64\2\2LN\5\30\r\2MK\3\2\2"+
+		"\2MN\3\2\2\2N\t\3\2\2\2OP\7&\2\2PQ\5\6\4\2QR\7\21\2\2RS\5\6\4\2ST\7+\2"+
+		"\2TU\5\30\r\2U\13\3\2\2\2VW\7)\2\2WX\5\6\4\2XY\7\21\2\2Y[\5\6\4\2Z\\\5"+
+		"\16\b\2[Z\3\2\2\2[\\\3\2\2\2\\\r\3\2\2\2]^\t\2\2\2^\17\3\2\2\2_`\7\37"+
+		"\2\2`a\5\6\4\2a\21\3\2\2\2be\5\24\13\2cd\7\23\2\2df\7\t\2\2ec\3\2\2\2"+
+		"fg\3\2\2\2ge\3\2\2\2gh\3\2\2\2h\23\3\2\2\2ij\7X\2\2j\25\3\2\2\2kl\b\f"+
+		"\1\2lm\5\32\16\2ms\3\2\2\2no\f\4\2\2op\7\22\2\2pr\5\26\f\5qn\3\2\2\2r"+
+		"u\3\2\2\2sq\3\2\2\2st\3\2\2\2t\27\3\2\2\2us\3\2\2\2vw\5\34\17\2w\31\3"+
+		"\2\2\2x{\5\36\20\2y{\5 \21\2zx\3\2\2\2zy\3\2\2\2{\33\3\2\2\2|}\5\36\20"+
+		"\2}~\7=\2\2~\177\5*\26\2\177\u0080\5\36\20\2\u0080\u0084\5,\27\2\u0081"+
+		"\u0085\5\36\20\2\u0082\u0085\5 \21\2\u0083\u0085\5\"\22\2\u0084\u0081"+
+		"\3\2\2\2\u0084\u0082\3\2\2\2\u0084\u0083\3\2\2\2\u0085\35\3\2\2\2\u0086"+
+		"\u008d\7G\2\2\u0087\u008d\7X\2\2\u0088\u0089\5\24\13\2\u0089\u008a\7\22"+
+		"\2\2\u008a\u008b\7X\2\2\u008b\u008d\3\2\2\2\u008c\u0086\3\2\2\2\u008c"+
+		"\u0087\3\2\2\2\u008c\u0088\3\2\2\2\u008d\37\3\2\2\2\u008e\u008f\3\2\2"+
+		"\2\u008f!\3\2\2\2\u0090\u0091\3\2\2\2\u0091#\3\2\2\2\u0092\u0095\5(\25"+
+		"\2\u0093\u0095\5&\24\2\u0094\u0092\3\2\2\2\u0094\u0093\3\2\2\2\u0095\u009a"+
+		"\3\2\2\2\u0096\u0097\7\16\2\2\u0097\u0099\7\17\2\2\u0098\u0096\3\2\2\2"+
+		"\u0099\u009c\3\2\2\2\u009a\u0098\3\2\2\2\u009a\u009b\3\2\2\2\u009b%\3"+
+		"\2\2\2\u009c\u009a\3\2\2\2\u009d\u009e\t\3\2\2\u009e\'\3\2\2\2\u009f\u00a0"+
+		"\t\4\2\2\u00a0)\3\2\2\2\u00a1\u00a2\t\5\2\2\u00a2+\3\2\2\2\u00a3\u00a4"+
+		"\t\6\2\2\u00a4-\3\2\2\2\u00a5\u00a9\7\6\2\2\u00a6\u00a8\n\7\2\2\u00a7"+
+		"\u00a6\3\2\2\2\u00a8\u00ab\3\2\2\2\u00a9\u00a7\3\2\2\2\u00a9\u00aa\3\2"+
+		"\2\2\u00aa\u00ac\3\2\2\2\u00ab\u00a9\3\2\2\2\u00ac\u00ad\7\6\2\2\u00ad"+
+		"/\3\2\2\2\16\63EM[gsz\u0084\u008c\u0094\u009a\u00a9";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
