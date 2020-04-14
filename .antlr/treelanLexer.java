@@ -1,4 +1,4 @@
-// Generated from d:\Tez\2019-2020\Chrome Extension\thesis-work\languageformalism\treelan.g4 by ANTLR 4.7.1
+// Generated from d:\Tez\2019-2020\Chrome Extension\thesis-work\languageformalism\treelan_old.g4 by ANTLR 4.7.1
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -129,7 +129,7 @@ public class treelanLexer extends Lexer {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "treelan.g4"; }
+	public String getGrammarFileName() { return "treelan_old.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }

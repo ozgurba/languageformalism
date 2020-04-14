@@ -1,11 +1,19 @@
-grammar treeql;
+grammar TreeQL;
 
 stats
-    :
-    (definition)* treeQuery
+    : COMMENT?
+    (definition)* treeQuery EOF
     ;
+
 definition
-    : typeType VAR_NAME ';' 
+    : typeType VAR_NAME (ASSIGN assignmentExpr)? ';' 
+    ;
+assignmentExpr
+    :
+    STRING_LITERAL
+    | booleanLiteral
+    | signed_number
+    | json
     ;
 treeQuery
     :
@@ -13,7 +21,7 @@ treeQuery
     | joinQuery
     | mergeQuery
     | explodeQuery
-    LPAREN treeQuery RPAREN
+    | LPAREN treeQuery RPAREN
     | rangeVariableDeclaration
     ;
 selectQuery
@@ -22,12 +30,12 @@ selectQuery
     ;
 joinQuery
     :
-    JOIN treeQuery ',' treeQuery ON selectorCondition 
+    JOIN treeQuery (COMMA treeQuery (ON selectorCondition)? )+ 
     ;
 
 mergeQuery
     :
-    MERGE treeQuery ',' treeQuery conflictspec?
+    MERGE treeQuery (COMMA treeQuery (ON selectorCondition)? conflictspec? )+
     ;
 
 conflictspec
@@ -39,60 +47,61 @@ conflictspec
     |   OVERRIDE
     |   EVALUATE
 ;
+
 explodeQuery
     :
-    EXPLODE treeQuery
+    EXPLODE LPAREN treeExpression COMMA expression RPAREN
     ;
 
 rangeVariableDeclaration
     :
-    abstractTreeName (AS ALIAS)+
+    abstractTreeName (AS VAR_NAME)?
     ;
 abstractTreeName
     :
     VAR_NAME
     ;
 
-ALIAS
-    :
-    VAR_NAME
-    ;
-
 expressions
     :
-    expressions '.' expressions
+    expression '.' expressions
     | expression
     ;
 selectorCondition
     :
-    booleanExpression
+    expressions comparisonOperator expressions
+    | booleanExpression
     ;
 
 expression
     :
     treeExpression
     | stringExpression
+    | numberExpression
+    | booleanExpression
     ;
 
 booleanExpression
     :
-    treeExpression '==' booleanLiteral
-    treeExpression comparisonOperator (treeExpression | stringExpression | numberExpression)
+    booleanLiteral
     ;
 
 treeExpression
-    :
-    '*'
-    | VAR_NAME
-    | abstractTreeName '.' VAR_NAME
+    : VAR_NAME (COMMA VAR_NAME)*
+    | (STAR | treeElement) (treeElement)*
     ;
-
+treeElement
+    :
+     abstractTreeName DOT (VAR_NAME | STAR )   
+    ;
 stringExpression
     :
+     STRING_LITERAL
     ;
 
 numberExpression
     :
+    NUMERIC_LITERAL
     ;
 
 typeType
@@ -111,11 +120,46 @@ primitiveType
     ;
 
 complexType
-	:	LIST
-	|	TREE
-    |   NODE
-	|	STRING
+	: TREE
+	| STRING
 	;	
+json
+    :
+     json_value   
+    ;
+json_value
+   : STRING_LITERAL
+   | NUMBER
+   | obj
+   | arr
+   | booleanLiteral
+   | 'null'
+   ;
+obj
+   : '{' pair (',' pair)* '}'
+   | '{' '}'
+   ;
+pair
+   : STRING_LITERAL ':' json_value
+   ;
+arr
+   : '[' json_value (',' json_value)* ']'
+   | '[' ']'
+   ;
+
+NUMBER
+   : '-'? INTEGER ('.' [0-9] +)? EXP?
+   ;
+
+
+fragment INTEGER
+   : '0' | [1-9] [0-9]*
+   ;
+// no leading zeros
+
+fragment EXP
+   : [Ee] [+\-]? INT
+   ;
 
 
 booleanLiteral
@@ -124,7 +168,8 @@ booleanLiteral
     ;
 
 comparisonOperator
-   : '='
+   : '=='
+   | '!='  
    | '>'
    | '>='
    | '<'
@@ -132,11 +177,23 @@ comparisonOperator
    | '<>'
    ;
 
-stringLiteral
-   : ('\'' (~ ('\\' | '"'))* '\'')
-   ;
 
-    // Separators
+signed_number
+ : ( '+' | '-' )? NUMERIC_LITERAL
+ ;
+
+//LEXER RULES
+STRING_LITERAL
+:     
+'"' (~["\\\r\n] | EscapeSequence)* '"'
+;
+
+NUMERIC_LITERAL
+ : DIGIT+ ( '.' DIGIT* )? ( E [-+]? DIGIT+ )?
+ | '.' DIGIT+ ( E [-+]? DIGIT+ )?
+ ;
+
+// Separators
 LPAREN:             '(';
 RPAREN:             ')';
 LBRACE:             '{';
@@ -154,10 +211,10 @@ BOOLEAN:            'boolean';
 BYTE:               'byte';
 CHAR:               'char';
 DOUBLE:             'double';
-CONFORMIFEQUAL:     'conformifequal';
-DERIVEALWAYS:       'derivealways';
-DERIVEIFNOTEQUAL:   'deriveifequal';
-TERMINATEIFNOTEQUAL:'terminateifnotequal';    
+CONFORMIFEQUAL:     'conform if equal';
+DERIVEALWAYS:       'derive always';
+DERIVEIFNOTEQUAL:   'derive if equal';
+TERMINATEIFNOTEQUAL:'terminate if not equal';    
 TERMINATE:          'terminate';
 OVERRIDE:           'override';
 EVALUATE:           'evaluate';
@@ -169,10 +226,8 @@ FOR:                'for';
 IF:                 'if';
 INT:                'int';
 JOIN:               'join';
-LIST:				'list';
 LONG:               'long';
 MERGE:              'merge';
-NODE:               'node';
 ON:                 'on';
 RECOGNIZE:          'recognize';
 SHORT:              'short';
@@ -203,13 +258,12 @@ INC:                '++';
 DEC:                '--';
 ADD:                '+';
 SUB:                '-';
-MUL:                '*';
 DIV:                '/';
 BITAND:             '&';
 BITOR:              '|';
 CARET:              '^';
 MOD:                '%';
-
+STAR:               '*';
 ADD_ASSIGN:         '+=';
 SUB_ASSIGN:         '-=';
 MUL_ASSIGN:         '*=';
@@ -226,7 +280,16 @@ fragment
 DIGIT
     : '0'..'9'
     ;
+fragment E : [eE];
+fragment EscapeSequence
+    : '\\' [btnfr"'\\]
+    | '\\' ([0-3]? [0-7])? [0-7]
+    | '\\' 'u'+ HexDigit HexDigit HexDigit HexDigit
+    ;
 
+fragment HexDigit
+    : [0-9a-fA-F]
+    ;
 VAR_NAME
    : ('a' .. 'z' | 'A' .. 'Z' | '_') ('a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_')*
    ;
@@ -238,9 +301,7 @@ CHARACTER
 ESCAPE_CHARACTER
    : CHARACTER
    ;
-WS
-    : (' '
-    | '\t'
-    | '\n'
-    | '\r')+ ->skip
-    ;
+// Whitespace and comments
+
+WS:                 [ \t\r\n\u000C]+ -> channel(HIDDEN);
+COMMENT:       '//' ~[\r\n]*    -> channel(HIDDEN);

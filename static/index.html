@@ -25,9 +25,9 @@ var JSONFormatter=require('lib/json/json-formatter');
 document.getElementById("parse").addEventListener("click", function(){
     var input = document.getElementById("code").value;
     var chars = new antlr4.InputStream(input);
-    var lexer = new treeqlLexer.treeqlLexer(chars);
+    var lexer = new treeqlLexer.TreeQLLexer(chars);
     var tokens  = new antlr4.CommonTokenStream(lexer);
-    var parser = new treeqlParser.treeqlParser(tokens);
+    var parser = new treeqlParser.TreeQLParser(tokens);
     parser.buildParseTrees = true;
     var tree = parser.stats();
     console.log("Parsed: "+ tree);
