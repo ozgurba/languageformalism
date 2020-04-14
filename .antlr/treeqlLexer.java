@@ -1,4 +1,4 @@
-// Generated from d:\Tez\2019-2020\Chrome Extension\thesis-work\languageformalism\TreeQL1.g4 by ANTLR 4.7.1
+// Generated from d:\Tez\2019-2020\Chrome Extension\thesis-work\languageformalism\TreeQL.g4 by ANTLR 4.7.1
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -120,7 +120,7 @@ public class TreeQLLexer extends Lexer {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "TreeQL1.g4"; }
+	public String getGrammarFileName() { return "TreeQL.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
