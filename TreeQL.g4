@@ -1,5 +1,7 @@
 grammar TreeQL;
-
+// Sorular
+// 1. treename ile attribute name'ler ayrılmalı mıdır?
+//
 stats
     : COMMENT?
     (definition)* treeQuery EOF
@@ -11,7 +13,7 @@ definition
 assignmentExpr
     :
     STRING_LITERAL
-    | booleanLiteral
+    | BOOLEAN_LITERAL
     | signed_number
     | json
     ;
@@ -26,18 +28,16 @@ treeQuery
     ;
 selectQuery
     :
-    SELECT treeExpression FROM treeQuery (WHERE selectorCondition)?
+    SELECT treeExpression FROM treeQuery (WHERE selectExpression)?
     ;
 joinQuery
     :
-    JOIN treeQuery (COMMA treeQuery (ON selectorCondition)? )+ 
+    JOIN treeQuery (COMMA treeQuery (ON selectExpression)? )+ 
     ;
-
 mergeQuery
     :
-    MERGE treeQuery (COMMA treeQuery (ON selectorCondition)? conflictspec? )+
+    MERGE treeQuery (COMMA treeQuery (ON selectExpression)? conflictspec? )+
     ;
-
 conflictspec
     : CONFORMIFEQUAL
     |   DERIVEALWAYS
@@ -47,7 +47,6 @@ conflictspec
     |   OVERRIDE
     |   EVALUATE
 ;
-
 explodeQuery
     :
     EXPLODE LPAREN treeExpression COMMA expression RPAREN
@@ -61,49 +60,31 @@ abstractTreeName
     :
     VAR_NAME
     ;
-
-expressions
+selectExpression
     :
-    expression '.' expressions
-    | expression
+    booleanExpression
     ;
-selectorCondition
-    :
-    expressions comparisonOperator expressions
-    | booleanExpression
-    ;
-
 expression
     :
     treeExpression
-    | stringExpression
-    | numberExpression
-    | booleanExpression
+    | BOOLEAN_LITERAL
+    | STRING_LITERAL
+    | NUMERIC_LITERAL
     ;
-
 booleanExpression
     :
-    booleanLiteral
+    expression comparisonOperator expression    
+    | BOOLEAN_LITERAL
     ;
-
 treeExpression
-    : VAR_NAME (COMMA VAR_NAME)*
-    | (STAR | treeElement) (treeElement)*
+    : 
+    (STAR | treeElement) (COMMA treeElement)*
     ;
 treeElement
-    :
-     abstractTreeName DOT (VAR_NAME | STAR )   
+    : 
+    abstractTreeName DOT (VAR_NAME | STAR ) (AS VAR_NAME)?  
+    | VAR_NAME (AS VAR_NAME)?
     ;
-stringExpression
-    :
-     STRING_LITERAL
-    ;
-
-numberExpression
-    :
-    NUMERIC_LITERAL
-    ;
-
 typeType
     : (complexType | primitiveType) ('[' ']')*
     ;
@@ -132,7 +113,7 @@ json_value
    | NUMBER
    | obj
    | arr
-   | booleanLiteral
+   | BOOLEAN_LITERAL
    | 'null'
    ;
 obj
@@ -162,27 +143,26 @@ fragment EXP
    ;
 
 
-booleanLiteral
-    : 'true'
-    | 'false'
-    ;
 
 comparisonOperator
-   : '=='
-   | '!='  
-   | '>'
-   | '>='
-   | '<'
-   | '<='
-   | '<>'
+   : EQUAL
+   | NOTEQUAL  
+   | GT
+   | GE
+   | LT  
+   | LE
    ;
-
 
 signed_number
  : ( '+' | '-' )? NUMERIC_LITERAL
  ;
 
 //LEXER RULES
+BOOLEAN_LITERAL
+    : TRUE
+    | FALSE
+    ;
+
 STRING_LITERAL
 :     
 '"' (~["\\\r\n] | EscapeSequence)* '"'
@@ -192,7 +172,9 @@ NUMERIC_LITERAL
  : DIGIT+ ( '.' DIGIT* )? ( E [-+]? DIGIT+ )?
  | '.' DIGIT+ ( E [-+]? DIGIT+ )?
  ;
-
+//
+TRUE:               'true';
+FALSE:              'false';
 // Separators
 LPAREN:             '(';
 RPAREN:             ')';
@@ -220,10 +202,7 @@ OVERRIDE:           'override';
 EVALUATE:           'evaluate';
 EXPLODE:            'explode';
 DROP:               'drop';
-ELSE:               'else';
 FLOAT:              'float';
-FOR:                'for';
-IF:                 'if';
 INT:                'int';
 JOIN:               'join';
 LONG:               'long';
@@ -231,14 +210,13 @@ MERGE:              'merge';
 ON:                 'on';
 RECOGNIZE:          'recognize';
 SHORT:              'short';
-STRING:				'String';
+STRING:             'String';
 PATH:               'Path';
-TREE:				'Tree';
-UNION:				'union';
-SELECT:				'select';
+TREE:               'Tree';
+UNION:              'union';
+SELECT:             'select';
 FROM:               'from';
 WHERE:              'where';
-ORDERBY:			'orderby';
 
 // Operators
 ASSIGN:             '=';
@@ -259,22 +237,8 @@ DEC:                '--';
 ADD:                '+';
 SUB:                '-';
 DIV:                '/';
-BITAND:             '&';
-BITOR:              '|';
-CARET:              '^';
 MOD:                '%';
 STAR:               '*';
-ADD_ASSIGN:         '+=';
-SUB_ASSIGN:         '-=';
-MUL_ASSIGN:         '*=';
-DIV_ASSIGN:         '/=';
-AND_ASSIGN:         '&=';
-OR_ASSIGN:          '|=';
-XOR_ASSIGN:         '^=';
-MOD_ASSIGN:         '%=';
-LSHIFT_ASSIGN:      '<<=';
-RSHIFT_ASSIGN:      '>>=';
-URSHIFT_ASSIGN:     '>>>=';
 
 fragment
 DIGIT
