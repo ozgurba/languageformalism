@@ -66,21 +66,21 @@ expression
 ;
 booleanExpression
     :
-    booleanOperand booleanOperator booleanOperand    
+    booleanOperand ( booleanOperator booleanOperand)*    
     ;
 
 booleanOperand
-: comparisonOperand comparisonOperator comparisonOperand
+: comparisonOperand (comparisonOperator comparisonOperand)*
 ;
 comparisonOperand
     :
-    mathOperand mathOperator mathOperand
+    mathOperand (mathOperator mathOperand)*
     ;
 mathOperand
     : BOOLEAN_LITERAL
     | STRING_LITERAL
     | signed_number
-    | LPAREN expression RPAREN 
+    | LPAREN expression RPAREN
     ;
 treeExpression
     : 
