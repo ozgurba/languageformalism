@@ -1,12 +1,9 @@
 grammar TreeQL;
-// Sorular
-// 1. treename ile attribute name'ler ayrılmalı mıdır?
-//
+
 stats
     : COMMENT?
     (definition)* treeQuery EOF
     ;
-
 definition
     : typeType VAR_NAME (ASSIGN assignmentExpr)? ';' 
     ;
@@ -82,7 +79,7 @@ comparisonOperand
 mathOperand
     : BOOLEAN_LITERAL
     | STRING_LITERAL
-    | NUMERIC_LITERAL
+    | signed_number
     | LPAREN expression RPAREN 
     ;
 treeExpression
@@ -119,7 +116,7 @@ json
     ;
 json_value
    : STRING_LITERAL
-   | NUMBER
+   | signed_number
    | obj
    | arr
    | BOOLEAN_LITERAL
@@ -136,20 +133,7 @@ arr
    : '[' json_value (',' json_value)* ']'
    | '[' ']'
    ;
-
-NUMBER
-   : '-'? INTEGER ('.' [0-9] +)? EXP?
-   ;
-
-
-fragment INTEGER
-   : '0' | [1-9] [0-9]*
-   ;
 // no leading zeros
-
-fragment EXP
-   : [Ee] [+\-]? INT
-   ;
 
 mathOperator
     :
