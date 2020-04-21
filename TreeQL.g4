@@ -11,9 +11,7 @@ definition
     : typeType VAR_NAME (ASSIGN assignmentExpr)? ';' 
     ;
 assignmentExpr
-    :
-    STRING_LITERAL
-    | BOOLEAN_LITERAL
+    : expression
     | signed_number
     | json
     ;
@@ -67,14 +65,25 @@ selectExpression
 expression
     :
     treeExpression
-    | BOOLEAN_LITERAL
-    | STRING_LITERAL
-    | NUMERIC_LITERAL
-    ;
+    | booleanExpression
+;
 booleanExpression
     :
-    expression comparisonOperator expression    
-    | BOOLEAN_LITERAL
+    booleanOperand booleanOperator booleanOperand    
+    ;
+
+booleanOperand
+: comparisonOperand comparisonOperator comparisonOperand
+;
+comparisonOperand
+    :
+    mathOperand mathOperator mathOperand
+    ;
+mathOperand
+    : BOOLEAN_LITERAL
+    | STRING_LITERAL
+    | NUMERIC_LITERAL
+    | LPAREN expression RPAREN 
     ;
 treeExpression
     : 
@@ -142,7 +151,21 @@ fragment EXP
    : [Ee] [+\-]? INT
    ;
 
+mathOperator
+    :
+    ADD
+    | SUB
+    | DIV
+    | MOD
+    | STAR
+    ;
 
+booleanOperator
+    :
+    AND
+    | OR
+    | BANG
+    ;
 
 comparisonOperator
    : EQUAL
@@ -152,6 +175,7 @@ comparisonOperator
    | LT  
    | LE
    ;
+
 
 signed_number
  : ( '+' | '-' )? NUMERIC_LITERAL

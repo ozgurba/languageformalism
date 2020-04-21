@@ -31,15 +31,19 @@ public class TreeQLParser extends Parser {
 		RULE_selectQuery = 4, RULE_joinQuery = 5, RULE_mergeQuery = 6, RULE_conflictspec = 7, 
 		RULE_explodeQuery = 8, RULE_rangeVariableDeclaration = 9, RULE_abstractTreeName = 10, 
 		RULE_selectExpression = 11, RULE_expression = 12, RULE_booleanExpression = 13, 
-		RULE_treeExpression = 14, RULE_treeElement = 15, RULE_typeType = 16, RULE_primitiveType = 17, 
-		RULE_complexType = 18, RULE_json = 19, RULE_json_value = 20, RULE_obj = 21, 
-		RULE_pair = 22, RULE_arr = 23, RULE_comparisonOperator = 24, RULE_signed_number = 25;
+		RULE_booleanOperand = 14, RULE_comparisonOperand = 15, RULE_mathOperand = 16, 
+		RULE_treeExpression = 17, RULE_treeElement = 18, RULE_typeType = 19, RULE_primitiveType = 20, 
+		RULE_complexType = 21, RULE_json = 22, RULE_json_value = 23, RULE_obj = 24, 
+		RULE_pair = 25, RULE_arr = 26, RULE_mathOperator = 27, RULE_booleanOperator = 28, 
+		RULE_comparisonOperator = 29, RULE_signed_number = 30;
 	public static final String[] ruleNames = {
 		"stats", "definition", "assignmentExpr", "treeQuery", "selectQuery", "joinQuery", 
 		"mergeQuery", "conflictspec", "explodeQuery", "rangeVariableDeclaration", 
 		"abstractTreeName", "selectExpression", "expression", "booleanExpression", 
-		"treeExpression", "treeElement", "typeType", "primitiveType", "complexType", 
-		"json", "json_value", "obj", "pair", "arr", "comparisonOperator", "signed_number"
+		"booleanOperand", "comparisonOperand", "mathOperand", "treeExpression", 
+		"treeElement", "typeType", "primitiveType", "complexType", "json", "json_value", 
+		"obj", "pair", "arr", "mathOperator", "booleanOperator", "comparisonOperator", 
+		"signed_number"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -139,33 +143,33 @@ public class TreeQLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(53);
+			setState(63);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==COMMENT) {
 				{
-				setState(52);
+				setState(62);
 				match(COMMENT);
 				}
 			}
 
-			setState(58);
+			setState(68);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BOOLEAN) | (1L << BYTE) | (1L << CHAR) | (1L << DOUBLE) | (1L << FLOAT) | (1L << INT) | (1L << LONG) | (1L << SHORT) | (1L << STRING) | (1L << TREE))) != 0)) {
 				{
 				{
-				setState(55);
+				setState(65);
 				definition();
 				}
 				}
-				setState(60);
+				setState(70);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(61);
+			setState(71);
 			treeQuery();
-			setState(62);
+			setState(72);
 			match(EOF);
 			}
 		}
@@ -202,23 +206,23 @@ public class TreeQLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(64);
+			setState(74);
 			typeType();
-			setState(65);
+			setState(75);
 			match(VAR_NAME);
-			setState(68);
+			setState(78);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==ASSIGN) {
 				{
-				setState(66);
+				setState(76);
 				match(ASSIGN);
-				setState(67);
+				setState(77);
 				assignmentExpr();
 				}
 			}
 
-			setState(70);
+			setState(80);
 			match(SEMI);
 			}
 		}
@@ -234,8 +238,9 @@ public class TreeQLParser extends Parser {
 	}
 
 	public static class AssignmentExprContext extends ParserRuleContext {
-		public TerminalNode STRING_LITERAL() { return getToken(TreeQLParser.STRING_LITERAL, 0); }
-		public TerminalNode BOOLEAN_LITERAL() { return getToken(TreeQLParser.BOOLEAN_LITERAL, 0); }
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
 		public Signed_numberContext signed_number() {
 			return getRuleContext(Signed_numberContext.class,0);
 		}
@@ -252,34 +257,27 @@ public class TreeQLParser extends Parser {
 		AssignmentExprContext _localctx = new AssignmentExprContext(_ctx, getState());
 		enterRule(_localctx, 4, RULE_assignmentExpr);
 		try {
-			setState(76);
+			setState(85);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(72);
-				match(STRING_LITERAL);
+				setState(82);
+				expression();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(73);
-				match(BOOLEAN_LITERAL);
+				setState(83);
+				signed_number();
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(74);
-				signed_number();
-				}
-				break;
-			case 4:
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(75);
+				setState(84);
 				json();
 				}
 				break;
@@ -327,52 +325,52 @@ public class TreeQLParser extends Parser {
 		TreeQueryContext _localctx = new TreeQueryContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_treeQuery);
 		try {
-			setState(87);
+			setState(96);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case SELECT:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(78);
+				setState(87);
 				selectQuery();
 				}
 				break;
 			case JOIN:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(79);
+				setState(88);
 				joinQuery();
 				}
 				break;
 			case MERGE:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(80);
+				setState(89);
 				mergeQuery();
 				}
 				break;
 			case EXPLODE:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(81);
+				setState(90);
 				explodeQuery();
 				}
 				break;
 			case LPAREN:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(82);
+				setState(91);
 				match(LPAREN);
-				setState(83);
+				setState(92);
 				treeQuery();
-				setState(84);
+				setState(93);
 				match(RPAREN);
 				}
 				break;
 			case VAR_NAME:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(86);
+				setState(95);
 				rangeVariableDeclaration();
 				}
 				break;
@@ -416,22 +414,22 @@ public class TreeQLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(89);
+			setState(98);
 			match(SELECT);
-			setState(90);
+			setState(99);
 			treeExpression();
-			setState(91);
+			setState(100);
 			match(FROM);
-			setState(92);
+			setState(101);
 			treeQuery();
-			setState(95);
+			setState(104);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
 			case 1:
 				{
-				setState(93);
+				setState(102);
 				match(WHERE);
-				setState(94);
+				setState(103);
 				selectExpression();
 				}
 				break;
@@ -484,11 +482,11 @@ public class TreeQLParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(97);
+			setState(106);
 			match(JOIN);
-			setState(98);
+			setState(107);
 			treeQuery();
-			setState(105); 
+			setState(114); 
 			_errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -496,18 +494,18 @@ public class TreeQLParser extends Parser {
 				case 1:
 					{
 					{
-					setState(99);
+					setState(108);
 					match(COMMA);
-					setState(100);
+					setState(109);
 					treeQuery();
-					setState(103);
+					setState(112);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
 					case 1:
 						{
-						setState(101);
+						setState(110);
 						match(ON);
-						setState(102);
+						setState(111);
 						selectExpression();
 						}
 						break;
@@ -518,7 +516,7 @@ public class TreeQLParser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				setState(107); 
+				setState(116); 
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
@@ -576,11 +574,11 @@ public class TreeQLParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(109);
+			setState(118);
 			match(MERGE);
-			setState(110);
+			setState(119);
 			treeQuery();
-			setState(120); 
+			setState(129); 
 			_errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -588,28 +586,28 @@ public class TreeQLParser extends Parser {
 				case 1:
 					{
 					{
-					setState(111);
+					setState(120);
 					match(COMMA);
-					setState(112);
+					setState(121);
 					treeQuery();
-					setState(115);
+					setState(124);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 					case 1:
 						{
-						setState(113);
+						setState(122);
 						match(ON);
-						setState(114);
+						setState(123);
 						selectExpression();
 						}
 						break;
 					}
-					setState(118);
+					setState(127);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
 					case 1:
 						{
-						setState(117);
+						setState(126);
 						conflictspec();
 						}
 						break;
@@ -620,7 +618,7 @@ public class TreeQLParser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				setState(122); 
+				setState(131); 
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
 			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
@@ -658,7 +656,7 @@ public class TreeQLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(124);
+			setState(133);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << CONFORMIFEQUAL) | (1L << DERIVEALWAYS) | (1L << DERIVEIFNOTEQUAL) | (1L << TERMINATEIFNOTEQUAL) | (1L << TERMINATE) | (1L << OVERRIDE) | (1L << EVALUATE))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -704,17 +702,17 @@ public class TreeQLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(126);
+			setState(135);
 			match(EXPLODE);
-			setState(127);
+			setState(136);
 			match(LPAREN);
-			setState(128);
+			setState(137);
 			treeExpression();
-			setState(129);
+			setState(138);
 			match(COMMA);
-			setState(130);
+			setState(139);
 			expression();
-			setState(131);
+			setState(140);
 			match(RPAREN);
 			}
 		}
@@ -748,16 +746,16 @@ public class TreeQLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(133);
+			setState(142);
 			abstractTreeName();
-			setState(136);
+			setState(145);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==AS) {
 				{
-				setState(134);
+				setState(143);
 				match(AS);
-				setState(135);
+				setState(144);
 				match(VAR_NAME);
 				}
 			}
@@ -789,7 +787,7 @@ public class TreeQLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(138);
+			setState(147);
 			match(VAR_NAME);
 			}
 		}
@@ -820,7 +818,7 @@ public class TreeQLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(140);
+			setState(149);
 			booleanExpression();
 			}
 		}
@@ -839,9 +837,9 @@ public class TreeQLParser extends Parser {
 		public TreeExpressionContext treeExpression() {
 			return getRuleContext(TreeExpressionContext.class,0);
 		}
-		public TerminalNode BOOLEAN_LITERAL() { return getToken(TreeQLParser.BOOLEAN_LITERAL, 0); }
-		public TerminalNode STRING_LITERAL() { return getToken(TreeQLParser.STRING_LITERAL, 0); }
-		public TerminalNode NUMERIC_LITERAL() { return getToken(TreeQLParser.NUMERIC_LITERAL, 0); }
+		public BooleanExpressionContext booleanExpression() {
+			return getRuleContext(BooleanExpressionContext.class,0);
+		}
 		public ExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -852,36 +850,25 @@ public class TreeQLParser extends Parser {
 		ExpressionContext _localctx = new ExpressionContext(_ctx, getState());
 		enterRule(_localctx, 24, RULE_expression);
 		try {
-			setState(146);
+			setState(153);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case STAR:
 			case VAR_NAME:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(142);
+				setState(151);
 				treeExpression();
 				}
 				break;
 			case BOOLEAN_LITERAL:
+			case STRING_LITERAL:
+			case NUMERIC_LITERAL:
+			case LPAREN:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(143);
-				match(BOOLEAN_LITERAL);
-				}
-				break;
-			case STRING_LITERAL:
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(144);
-				match(STRING_LITERAL);
-				}
-				break;
-			case NUMERIC_LITERAL:
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(145);
-				match(NUMERIC_LITERAL);
+				setState(152);
+				booleanExpression();
 				}
 				break;
 			default:
@@ -900,16 +887,15 @@ public class TreeQLParser extends Parser {
 	}
 
 	public static class BooleanExpressionContext extends ParserRuleContext {
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
+		public List<BooleanOperandContext> booleanOperand() {
+			return getRuleContexts(BooleanOperandContext.class);
 		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
+		public BooleanOperandContext booleanOperand(int i) {
+			return getRuleContext(BooleanOperandContext.class,i);
 		}
-		public ComparisonOperatorContext comparisonOperator() {
-			return getRuleContext(ComparisonOperatorContext.class,0);
+		public BooleanOperatorContext booleanOperator() {
+			return getRuleContext(BooleanOperatorContext.class,0);
 		}
-		public TerminalNode BOOLEAN_LITERAL() { return getToken(TreeQLParser.BOOLEAN_LITERAL, 0); }
 		public BooleanExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -920,27 +906,165 @@ public class TreeQLParser extends Parser {
 		BooleanExpressionContext _localctx = new BooleanExpressionContext(_ctx, getState());
 		enterRule(_localctx, 26, RULE_booleanExpression);
 		try {
-			setState(153);
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(155);
+			booleanOperand();
+			setState(156);
+			booleanOperator();
+			setState(157);
+			booleanOperand();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class BooleanOperandContext extends ParserRuleContext {
+		public List<ComparisonOperandContext> comparisonOperand() {
+			return getRuleContexts(ComparisonOperandContext.class);
+		}
+		public ComparisonOperandContext comparisonOperand(int i) {
+			return getRuleContext(ComparisonOperandContext.class,i);
+		}
+		public ComparisonOperatorContext comparisonOperator() {
+			return getRuleContext(ComparisonOperatorContext.class,0);
+		}
+		public BooleanOperandContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_booleanOperand; }
+	}
+
+	public final BooleanOperandContext booleanOperand() throws RecognitionException {
+		BooleanOperandContext _localctx = new BooleanOperandContext(_ctx, getState());
+		enterRule(_localctx, 28, RULE_booleanOperand);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(159);
+			comparisonOperand();
+			setState(160);
+			comparisonOperator();
+			setState(161);
+			comparisonOperand();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ComparisonOperandContext extends ParserRuleContext {
+		public List<MathOperandContext> mathOperand() {
+			return getRuleContexts(MathOperandContext.class);
+		}
+		public MathOperandContext mathOperand(int i) {
+			return getRuleContext(MathOperandContext.class,i);
+		}
+		public MathOperatorContext mathOperator() {
+			return getRuleContext(MathOperatorContext.class,0);
+		}
+		public ComparisonOperandContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_comparisonOperand; }
+	}
+
+	public final ComparisonOperandContext comparisonOperand() throws RecognitionException {
+		ComparisonOperandContext _localctx = new ComparisonOperandContext(_ctx, getState());
+		enterRule(_localctx, 30, RULE_comparisonOperand);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(163);
+			mathOperand();
+			setState(164);
+			mathOperator();
+			setState(165);
+			mathOperand();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class MathOperandContext extends ParserRuleContext {
+		public TerminalNode BOOLEAN_LITERAL() { return getToken(TreeQLParser.BOOLEAN_LITERAL, 0); }
+		public TerminalNode STRING_LITERAL() { return getToken(TreeQLParser.STRING_LITERAL, 0); }
+		public TerminalNode NUMERIC_LITERAL() { return getToken(TreeQLParser.NUMERIC_LITERAL, 0); }
+		public TerminalNode LPAREN() { return getToken(TreeQLParser.LPAREN, 0); }
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public TerminalNode RPAREN() { return getToken(TreeQLParser.RPAREN, 0); }
+		public MathOperandContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_mathOperand; }
+	}
+
+	public final MathOperandContext mathOperand() throws RecognitionException {
+		MathOperandContext _localctx = new MathOperandContext(_ctx, getState());
+		enterRule(_localctx, 32, RULE_mathOperand);
+		try {
+			setState(174);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,13,_ctx) ) {
-			case 1:
+			switch (_input.LA(1)) {
+			case BOOLEAN_LITERAL:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(148);
-				expression();
-				setState(149);
-				comparisonOperator();
-				setState(150);
-				expression();
-				}
-				break;
-			case 2:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(152);
+				setState(167);
 				match(BOOLEAN_LITERAL);
 				}
 				break;
+			case STRING_LITERAL:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(168);
+				match(STRING_LITERAL);
+				}
+				break;
+			case NUMERIC_LITERAL:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(169);
+				match(NUMERIC_LITERAL);
+				}
+				break;
+			case LPAREN:
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(170);
+				match(LPAREN);
+				setState(171);
+				expression();
+				setState(172);
+				match(RPAREN);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -974,44 +1098,44 @@ public class TreeQLParser extends Parser {
 
 	public final TreeExpressionContext treeExpression() throws RecognitionException {
 		TreeExpressionContext _localctx = new TreeExpressionContext(_ctx, getState());
-		enterRule(_localctx, 28, RULE_treeExpression);
+		enterRule(_localctx, 34, RULE_treeExpression);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(157);
+			setState(178);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case STAR:
 				{
-				setState(155);
+				setState(176);
 				match(STAR);
 				}
 				break;
 			case VAR_NAME:
 				{
-				setState(156);
+				setState(177);
 				treeElement();
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
-			setState(163);
+			setState(184);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,15,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(159);
+					setState(180);
 					match(COMMA);
-					setState(160);
+					setState(181);
 					treeElement();
 					}
 					} 
 				}
-				setState(165);
+				setState(186);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,15,_ctx);
 			}
@@ -1047,20 +1171,20 @@ public class TreeQLParser extends Parser {
 
 	public final TreeElementContext treeElement() throws RecognitionException {
 		TreeElementContext _localctx = new TreeElementContext(_ctx, getState());
-		enterRule(_localctx, 30, RULE_treeElement);
+		enterRule(_localctx, 36, RULE_treeElement);
 		int _la;
 		try {
-			setState(178);
+			setState(199);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,18,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(166);
+				setState(187);
 				abstractTreeName();
-				setState(167);
+				setState(188);
 				match(DOT);
-				setState(168);
+				setState(189);
 				_la = _input.LA(1);
 				if ( !(_la==STAR || _la==VAR_NAME) ) {
 				_errHandler.recoverInline(this);
@@ -1070,14 +1194,14 @@ public class TreeQLParser extends Parser {
 					_errHandler.reportMatch(this);
 					consume();
 				}
-				setState(171);
+				setState(192);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==AS) {
 					{
-					setState(169);
+					setState(190);
 					match(AS);
-					setState(170);
+					setState(191);
 					match(VAR_NAME);
 					}
 				}
@@ -1087,16 +1211,16 @@ public class TreeQLParser extends Parser {
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(173);
+				setState(194);
 				match(VAR_NAME);
-				setState(176);
+				setState(197);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==AS) {
 					{
-					setState(174);
+					setState(195);
 					match(AS);
-					setState(175);
+					setState(196);
 					match(VAR_NAME);
 					}
 				}
@@ -1131,18 +1255,18 @@ public class TreeQLParser extends Parser {
 
 	public final TypeTypeContext typeType() throws RecognitionException {
 		TypeTypeContext _localctx = new TypeTypeContext(_ctx, getState());
-		enterRule(_localctx, 32, RULE_typeType);
+		enterRule(_localctx, 38, RULE_typeType);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(182);
+			setState(203);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case STRING:
 			case TREE:
 				{
-				setState(180);
+				setState(201);
 				complexType();
 				}
 				break;
@@ -1155,26 +1279,26 @@ public class TreeQLParser extends Parser {
 			case LONG:
 			case SHORT:
 				{
-				setState(181);
+				setState(202);
 				primitiveType();
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
-			setState(188);
+			setState(209);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==LBRACK) {
 				{
 				{
-				setState(184);
+				setState(205);
 				match(LBRACK);
-				setState(185);
+				setState(206);
 				match(RBRACK);
 				}
 				}
-				setState(190);
+				setState(211);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -1208,12 +1332,12 @@ public class TreeQLParser extends Parser {
 
 	public final PrimitiveTypeContext primitiveType() throws RecognitionException {
 		PrimitiveTypeContext _localctx = new PrimitiveTypeContext(_ctx, getState());
-		enterRule(_localctx, 34, RULE_primitiveType);
+		enterRule(_localctx, 40, RULE_primitiveType);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(191);
+			setState(212);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BOOLEAN) | (1L << BYTE) | (1L << CHAR) | (1L << DOUBLE) | (1L << FLOAT) | (1L << INT) | (1L << LONG) | (1L << SHORT))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -1247,12 +1371,12 @@ public class TreeQLParser extends Parser {
 
 	public final ComplexTypeContext complexType() throws RecognitionException {
 		ComplexTypeContext _localctx = new ComplexTypeContext(_ctx, getState());
-		enterRule(_localctx, 36, RULE_complexType);
+		enterRule(_localctx, 42, RULE_complexType);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(193);
+			setState(214);
 			_la = _input.LA(1);
 			if ( !(_la==STRING || _la==TREE) ) {
 			_errHandler.recoverInline(this);
@@ -1287,11 +1411,11 @@ public class TreeQLParser extends Parser {
 
 	public final JsonContext json() throws RecognitionException {
 		JsonContext _localctx = new JsonContext(_ctx, getState());
-		enterRule(_localctx, 38, RULE_json);
+		enterRule(_localctx, 44, RULE_json);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(195);
+			setState(216);
 			json_value();
 			}
 		}
@@ -1324,50 +1448,50 @@ public class TreeQLParser extends Parser {
 
 	public final Json_valueContext json_value() throws RecognitionException {
 		Json_valueContext _localctx = new Json_valueContext(_ctx, getState());
-		enterRule(_localctx, 40, RULE_json_value);
+		enterRule(_localctx, 46, RULE_json_value);
 		try {
-			setState(203);
+			setState(224);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case STRING_LITERAL:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(197);
+				setState(218);
 				match(STRING_LITERAL);
 				}
 				break;
 			case NUMBER:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(198);
+				setState(219);
 				match(NUMBER);
 				}
 				break;
 			case LBRACE:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(199);
+				setState(220);
 				obj();
 				}
 				break;
 			case LBRACK:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(200);
+				setState(221);
 				arr();
 				}
 				break;
 			case BOOLEAN_LITERAL:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(201);
+				setState(222);
 				match(BOOLEAN_LITERAL);
 				}
 				break;
 			case T__0:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(202);
+				setState(223);
 				match(T__0);
 				}
 				break;
@@ -1401,45 +1525,45 @@ public class TreeQLParser extends Parser {
 
 	public final ObjContext obj() throws RecognitionException {
 		ObjContext _localctx = new ObjContext(_ctx, getState());
-		enterRule(_localctx, 42, RULE_obj);
+		enterRule(_localctx, 48, RULE_obj);
 		int _la;
 		try {
-			setState(218);
+			setState(239);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,23,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(205);
+				setState(226);
 				match(LBRACE);
-				setState(206);
+				setState(227);
 				pair();
-				setState(211);
+				setState(232);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==COMMA) {
 					{
 					{
-					setState(207);
+					setState(228);
 					match(COMMA);
-					setState(208);
+					setState(229);
 					pair();
 					}
 					}
-					setState(213);
+					setState(234);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(214);
+				setState(235);
 				match(RBRACE);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(216);
+				setState(237);
 				match(LBRACE);
-				setState(217);
+				setState(238);
 				match(RBRACE);
 				}
 				break;
@@ -1469,15 +1593,15 @@ public class TreeQLParser extends Parser {
 
 	public final PairContext pair() throws RecognitionException {
 		PairContext _localctx = new PairContext(_ctx, getState());
-		enterRule(_localctx, 44, RULE_pair);
+		enterRule(_localctx, 50, RULE_pair);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(220);
+			setState(241);
 			match(STRING_LITERAL);
-			setState(221);
+			setState(242);
 			match(COLON);
-			setState(222);
+			setState(243);
 			json_value();
 			}
 		}
@@ -1507,48 +1631,130 @@ public class TreeQLParser extends Parser {
 
 	public final ArrContext arr() throws RecognitionException {
 		ArrContext _localctx = new ArrContext(_ctx, getState());
-		enterRule(_localctx, 46, RULE_arr);
+		enterRule(_localctx, 52, RULE_arr);
 		int _la;
 		try {
-			setState(237);
+			setState(258);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,25,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(224);
+				setState(245);
 				match(LBRACK);
-				setState(225);
+				setState(246);
 				json_value();
-				setState(230);
+				setState(251);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==COMMA) {
 					{
 					{
-					setState(226);
+					setState(247);
 					match(COMMA);
-					setState(227);
+					setState(248);
 					json_value();
 					}
 					}
-					setState(232);
+					setState(253);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(233);
+				setState(254);
 				match(RBRACK);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(235);
+				setState(256);
 				match(LBRACK);
-				setState(236);
+				setState(257);
 				match(RBRACK);
 				}
 				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class MathOperatorContext extends ParserRuleContext {
+		public TerminalNode ADD() { return getToken(TreeQLParser.ADD, 0); }
+		public TerminalNode SUB() { return getToken(TreeQLParser.SUB, 0); }
+		public TerminalNode DIV() { return getToken(TreeQLParser.DIV, 0); }
+		public TerminalNode MOD() { return getToken(TreeQLParser.MOD, 0); }
+		public TerminalNode STAR() { return getToken(TreeQLParser.STAR, 0); }
+		public MathOperatorContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_mathOperator; }
+	}
+
+	public final MathOperatorContext mathOperator() throws RecognitionException {
+		MathOperatorContext _localctx = new MathOperatorContext(_ctx, getState());
+		enterRule(_localctx, 54, RULE_mathOperator);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(260);
+			_la = _input.LA(1);
+			if ( !(((((_la - 61)) & ~0x3f) == 0 && ((1L << (_la - 61)) & ((1L << (ADD - 61)) | (1L << (SUB - 61)) | (1L << (DIV - 61)) | (1L << (MOD - 61)) | (1L << (STAR - 61)))) != 0)) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class BooleanOperatorContext extends ParserRuleContext {
+		public TerminalNode AND() { return getToken(TreeQLParser.AND, 0); }
+		public TerminalNode OR() { return getToken(TreeQLParser.OR, 0); }
+		public TerminalNode BANG() { return getToken(TreeQLParser.BANG, 0); }
+		public BooleanOperatorContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_booleanOperator; }
+	}
+
+	public final BooleanOperatorContext booleanOperator() throws RecognitionException {
+		BooleanOperatorContext _localctx = new BooleanOperatorContext(_ctx, getState());
+		enterRule(_localctx, 56, RULE_booleanOperator);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(262);
+			_la = _input.LA(1);
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BANG) | (1L << AND) | (1L << OR))) != 0)) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -1577,12 +1783,12 @@ public class TreeQLParser extends Parser {
 
 	public final ComparisonOperatorContext comparisonOperator() throws RecognitionException {
 		ComparisonOperatorContext _localctx = new ComparisonOperatorContext(_ctx, getState());
-		enterRule(_localctx, 48, RULE_comparisonOperator);
+		enterRule(_localctx, 58, RULE_comparisonOperator);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(239);
+			setState(264);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << GT) | (1L << LT) | (1L << EQUAL) | (1L << LE) | (1L << GE) | (1L << NOTEQUAL))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -1615,17 +1821,17 @@ public class TreeQLParser extends Parser {
 
 	public final Signed_numberContext signed_number() throws RecognitionException {
 		Signed_numberContext _localctx = new Signed_numberContext(_ctx, getState());
-		enterRule(_localctx, 50, RULE_signed_number);
+		enterRule(_localctx, 60, RULE_signed_number);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(242);
+			setState(267);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==ADD || _la==SUB) {
 				{
-				setState(241);
+				setState(266);
 				_la = _input.LA(1);
 				if ( !(_la==ADD || _la==SUB) ) {
 				_errHandler.recoverInline(this);
@@ -1638,7 +1844,7 @@ public class TreeQLParser extends Parser {
 				}
 			}
 
-			setState(244);
+			setState(269);
 			match(NUMERIC_LITERAL);
 			}
 		}
@@ -1654,88 +1860,97 @@ public class TreeQLParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3H\u00f9\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3H\u0112\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
-		"\4\32\t\32\4\33\t\33\3\2\5\28\n\2\3\2\7\2;\n\2\f\2\16\2>\13\2\3\2\3\2"+
-		"\3\2\3\3\3\3\3\3\3\3\5\3G\n\3\3\3\3\3\3\4\3\4\3\4\3\4\5\4O\n\4\3\5\3\5"+
-		"\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5Z\n\5\3\6\3\6\3\6\3\6\3\6\3\6\5\6b\n\6"+
-		"\3\7\3\7\3\7\3\7\3\7\3\7\5\7j\n\7\6\7l\n\7\r\7\16\7m\3\b\3\b\3\b\3\b\3"+
-		"\b\3\b\5\bv\n\b\3\b\5\by\n\b\6\b{\n\b\r\b\16\b|\3\t\3\t\3\n\3\n\3\n\3"+
-		"\n\3\n\3\n\3\n\3\13\3\13\3\13\5\13\u008b\n\13\3\f\3\f\3\r\3\r\3\16\3\16"+
-		"\3\16\3\16\5\16\u0095\n\16\3\17\3\17\3\17\3\17\3\17\5\17\u009c\n\17\3"+
-		"\20\3\20\5\20\u00a0\n\20\3\20\3\20\7\20\u00a4\n\20\f\20\16\20\u00a7\13"+
-		"\20\3\21\3\21\3\21\3\21\3\21\5\21\u00ae\n\21\3\21\3\21\3\21\5\21\u00b3"+
-		"\n\21\5\21\u00b5\n\21\3\22\3\22\5\22\u00b9\n\22\3\22\3\22\7\22\u00bd\n"+
-		"\22\f\22\16\22\u00c0\13\22\3\23\3\23\3\24\3\24\3\25\3\25\3\26\3\26\3\26"+
-		"\3\26\3\26\3\26\5\26\u00ce\n\26\3\27\3\27\3\27\3\27\7\27\u00d4\n\27\f"+
-		"\27\16\27\u00d7\13\27\3\27\3\27\3\27\3\27\5\27\u00dd\n\27\3\30\3\30\3"+
-		"\30\3\30\3\31\3\31\3\31\3\31\7\31\u00e7\n\31\f\31\16\31\u00ea\13\31\3"+
-		"\31\3\31\3\31\3\31\5\31\u00f0\n\31\3\32\3\32\3\33\5\33\u00f5\n\33\3\33"+
-		"\3\33\3\33\2\2\34\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62"+
-		"\64\2\b\3\2\30\36\3\2CD\6\2\24\27!\"$$((\4\2))++\4\2\61\62\67:\3\2?@\2"+
-		"\u0105\2\67\3\2\2\2\4B\3\2\2\2\6N\3\2\2\2\bY\3\2\2\2\n[\3\2\2\2\fc\3\2"+
-		"\2\2\16o\3\2\2\2\20~\3\2\2\2\22\u0080\3\2\2\2\24\u0087\3\2\2\2\26\u008c"+
-		"\3\2\2\2\30\u008e\3\2\2\2\32\u0094\3\2\2\2\34\u009b\3\2\2\2\36\u009f\3"+
-		"\2\2\2 \u00b4\3\2\2\2\"\u00b8\3\2\2\2$\u00c1\3\2\2\2&\u00c3\3\2\2\2(\u00c5"+
-		"\3\2\2\2*\u00cd\3\2\2\2,\u00dc\3\2\2\2.\u00de\3\2\2\2\60\u00ef\3\2\2\2"+
-		"\62\u00f1\3\2\2\2\64\u00f4\3\2\2\2\668\7H\2\2\67\66\3\2\2\2\678\3\2\2"+
-		"\28<\3\2\2\29;\5\4\3\2:9\3\2\2\2;>\3\2\2\2<:\3\2\2\2<=\3\2\2\2=?\3\2\2"+
-		"\2><\3\2\2\2?@\5\b\5\2@A\7\2\2\3A\3\3\2\2\2BC\5\"\22\2CF\7D\2\2DE\7\60"+
-		"\2\2EG\5\6\4\2FD\3\2\2\2FG\3\2\2\2GH\3\2\2\2HI\7\20\2\2I\5\3\2\2\2JO\7"+
-		"\6\2\2KO\7\5\2\2LO\5\64\33\2MO\5(\25\2NJ\3\2\2\2NK\3\2\2\2NL\3\2\2\2N"+
-		"M\3\2\2\2O\7\3\2\2\2PZ\5\n\6\2QZ\5\f\7\2RZ\5\16\b\2SZ\5\22\n\2TU\7\n\2"+
-		"\2UV\5\b\5\2VW\7\13\2\2WZ\3\2\2\2XZ\5\24\13\2YP\3\2\2\2YQ\3\2\2\2YR\3"+
-		"\2\2\2YS\3\2\2\2YT\3\2\2\2YX\3\2\2\2Z\t\3\2\2\2[\\\7-\2\2\\]\5\36\20\2"+
-		"]^\7.\2\2^a\5\b\5\2_`\7/\2\2`b\5\30\r\2a_\3\2\2\2ab\3\2\2\2b\13\3\2\2"+
-		"\2cd\7#\2\2dk\5\b\5\2ef\7\21\2\2fi\5\b\5\2gh\7&\2\2hj\5\30\r\2ig\3\2\2"+
-		"\2ij\3\2\2\2jl\3\2\2\2ke\3\2\2\2lm\3\2\2\2mk\3\2\2\2mn\3\2\2\2n\r\3\2"+
-		"\2\2op\7%\2\2pz\5\b\5\2qr\7\21\2\2ru\5\b\5\2st\7&\2\2tv\5\30\r\2us\3\2"+
-		"\2\2uv\3\2\2\2vx\3\2\2\2wy\5\20\t\2xw\3\2\2\2xy\3\2\2\2y{\3\2\2\2zq\3"+
-		"\2\2\2{|\3\2\2\2|z\3\2\2\2|}\3\2\2\2}\17\3\2\2\2~\177\t\2\2\2\177\21\3"+
-		"\2\2\2\u0080\u0081\7\37\2\2\u0081\u0082\7\n\2\2\u0082\u0083\5\36\20\2"+
-		"\u0083\u0084\7\21\2\2\u0084\u0085\5\32\16\2\u0085\u0086\7\13\2\2\u0086"+
-		"\23\3\2\2\2\u0087\u008a\5\26\f\2\u0088\u0089\7\23\2\2\u0089\u008b\7D\2"+
-		"\2\u008a\u0088\3\2\2\2\u008a\u008b\3\2\2\2\u008b\25\3\2\2\2\u008c\u008d"+
-		"\7D\2\2\u008d\27\3\2\2\2\u008e\u008f\5\34\17\2\u008f\31\3\2\2\2\u0090"+
-		"\u0095\5\36\20\2\u0091\u0095\7\5\2\2\u0092\u0095\7\6\2\2\u0093\u0095\7"+
-		"\7\2\2\u0094\u0090\3\2\2\2\u0094\u0091\3\2\2\2\u0094\u0092\3\2\2\2\u0094"+
-		"\u0093\3\2\2\2\u0095\33\3\2\2\2\u0096\u0097\5\32\16\2\u0097\u0098\5\62"+
-		"\32\2\u0098\u0099\5\32\16\2\u0099\u009c\3\2\2\2\u009a\u009c\7\5\2\2\u009b"+
-		"\u0096\3\2\2\2\u009b\u009a\3\2\2\2\u009c\35\3\2\2\2\u009d\u00a0\7C\2\2"+
-		"\u009e\u00a0\5 \21\2\u009f\u009d\3\2\2\2\u009f\u009e\3\2\2\2\u00a0\u00a5"+
-		"\3\2\2\2\u00a1\u00a2\7\21\2\2\u00a2\u00a4\5 \21\2\u00a3\u00a1\3\2\2\2"+
-		"\u00a4\u00a7\3\2\2\2\u00a5\u00a3\3\2\2\2\u00a5\u00a6\3\2\2\2\u00a6\37"+
-		"\3\2\2\2\u00a7\u00a5\3\2\2\2\u00a8\u00a9\5\26\f\2\u00a9\u00aa\7\22\2\2"+
-		"\u00aa\u00ad\t\3\2\2\u00ab\u00ac\7\23\2\2\u00ac\u00ae\7D\2\2\u00ad\u00ab"+
-		"\3\2\2\2\u00ad\u00ae\3\2\2\2\u00ae\u00b5\3\2\2\2\u00af\u00b2\7D\2\2\u00b0"+
-		"\u00b1\7\23\2\2\u00b1\u00b3\7D\2\2\u00b2\u00b0\3\2\2\2\u00b2\u00b3\3\2"+
-		"\2\2\u00b3\u00b5\3\2\2\2\u00b4\u00a8\3\2\2\2\u00b4\u00af\3\2\2\2\u00b5"+
-		"!\3\2\2\2\u00b6\u00b9\5&\24\2\u00b7\u00b9\5$\23\2\u00b8\u00b6\3\2\2\2"+
-		"\u00b8\u00b7\3\2\2\2\u00b9\u00be\3\2\2\2\u00ba\u00bb\7\16\2\2\u00bb\u00bd"+
-		"\7\17\2\2\u00bc\u00ba\3\2\2\2\u00bd\u00c0\3\2\2\2\u00be\u00bc\3\2\2\2"+
-		"\u00be\u00bf\3\2\2\2\u00bf#\3\2\2\2\u00c0\u00be\3\2\2\2\u00c1\u00c2\t"+
-		"\4\2\2\u00c2%\3\2\2\2\u00c3\u00c4\t\5\2\2\u00c4\'\3\2\2\2\u00c5\u00c6"+
-		"\5*\26\2\u00c6)\3\2\2\2\u00c7\u00ce\7\6\2\2\u00c8\u00ce\7\4\2\2\u00c9"+
-		"\u00ce\5,\27\2\u00ca\u00ce\5\60\31\2\u00cb\u00ce\7\5\2\2\u00cc\u00ce\7"+
-		"\3\2\2\u00cd\u00c7\3\2\2\2\u00cd\u00c8\3\2\2\2\u00cd\u00c9\3\2\2\2\u00cd"+
-		"\u00ca\3\2\2\2\u00cd\u00cb\3\2\2\2\u00cd\u00cc\3\2\2\2\u00ce+\3\2\2\2"+
-		"\u00cf\u00d0\7\f\2\2\u00d0\u00d5\5.\30\2\u00d1\u00d2\7\21\2\2\u00d2\u00d4"+
-		"\5.\30\2\u00d3\u00d1\3\2\2\2\u00d4\u00d7\3\2\2\2\u00d5\u00d3\3\2\2\2\u00d5"+
-		"\u00d6\3\2\2\2\u00d6\u00d8\3\2\2\2\u00d7\u00d5\3\2\2\2\u00d8\u00d9\7\r"+
-		"\2\2\u00d9\u00dd\3\2\2\2\u00da\u00db\7\f\2\2\u00db\u00dd\7\r\2\2\u00dc"+
-		"\u00cf\3\2\2\2\u00dc\u00da\3\2\2\2\u00dd-\3\2\2\2\u00de\u00df\7\6\2\2"+
-		"\u00df\u00e0\7\66\2\2\u00e0\u00e1\5*\26\2\u00e1/\3\2\2\2\u00e2\u00e3\7"+
-		"\16\2\2\u00e3\u00e8\5*\26\2\u00e4\u00e5\7\21\2\2\u00e5\u00e7\5*\26\2\u00e6"+
-		"\u00e4\3\2\2\2\u00e7\u00ea\3\2\2\2\u00e8\u00e6\3\2\2\2\u00e8\u00e9\3\2"+
-		"\2\2\u00e9\u00eb\3\2\2\2\u00ea\u00e8\3\2\2\2\u00eb\u00ec\7\17\2\2\u00ec"+
-		"\u00f0\3\2\2\2\u00ed\u00ee\7\16\2\2\u00ee\u00f0\7\17\2\2\u00ef\u00e2\3"+
-		"\2\2\2\u00ef\u00ed\3\2\2\2\u00f0\61\3\2\2\2\u00f1\u00f2\t\6\2\2\u00f2"+
-		"\63\3\2\2\2\u00f3\u00f5\t\7\2\2\u00f4\u00f3\3\2\2\2\u00f4\u00f5\3\2\2"+
-		"\2\u00f5\u00f6\3\2\2\2\u00f6\u00f7\7\7\2\2\u00f7\65\3\2\2\2\35\67<FNY"+
-		"aimux|\u008a\u0094\u009b\u009f\u00a5\u00ad\u00b2\u00b4\u00b8\u00be\u00cd"+
-		"\u00d5\u00dc\u00e8\u00ef\u00f4";
+		"\4\32\t\32\4\33\t\33\4\34\t\34\4\35\t\35\4\36\t\36\4\37\t\37\4 \t \3\2"+
+		"\5\2B\n\2\3\2\7\2E\n\2\f\2\16\2H\13\2\3\2\3\2\3\2\3\3\3\3\3\3\3\3\5\3"+
+		"Q\n\3\3\3\3\3\3\4\3\4\3\4\5\4X\n\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5"+
+		"\5\5c\n\5\3\6\3\6\3\6\3\6\3\6\3\6\5\6k\n\6\3\7\3\7\3\7\3\7\3\7\3\7\5\7"+
+		"s\n\7\6\7u\n\7\r\7\16\7v\3\b\3\b\3\b\3\b\3\b\3\b\5\b\177\n\b\3\b\5\b\u0082"+
+		"\n\b\6\b\u0084\n\b\r\b\16\b\u0085\3\t\3\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n"+
+		"\3\13\3\13\3\13\5\13\u0094\n\13\3\f\3\f\3\r\3\r\3\16\3\16\5\16\u009c\n"+
+		"\16\3\17\3\17\3\17\3\17\3\20\3\20\3\20\3\20\3\21\3\21\3\21\3\21\3\22\3"+
+		"\22\3\22\3\22\3\22\3\22\3\22\5\22\u00b1\n\22\3\23\3\23\5\23\u00b5\n\23"+
+		"\3\23\3\23\7\23\u00b9\n\23\f\23\16\23\u00bc\13\23\3\24\3\24\3\24\3\24"+
+		"\3\24\5\24\u00c3\n\24\3\24\3\24\3\24\5\24\u00c8\n\24\5\24\u00ca\n\24\3"+
+		"\25\3\25\5\25\u00ce\n\25\3\25\3\25\7\25\u00d2\n\25\f\25\16\25\u00d5\13"+
+		"\25\3\26\3\26\3\27\3\27\3\30\3\30\3\31\3\31\3\31\3\31\3\31\3\31\5\31\u00e3"+
+		"\n\31\3\32\3\32\3\32\3\32\7\32\u00e9\n\32\f\32\16\32\u00ec\13\32\3\32"+
+		"\3\32\3\32\3\32\5\32\u00f2\n\32\3\33\3\33\3\33\3\33\3\34\3\34\3\34\3\34"+
+		"\7\34\u00fc\n\34\f\34\16\34\u00ff\13\34\3\34\3\34\3\34\3\34\5\34\u0105"+
+		"\n\34\3\35\3\35\3\36\3\36\3\37\3\37\3 \5 \u010e\n \3 \3 \3 \2\2!\2\4\6"+
+		"\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\64\668:<>\2\n\3\2\30"+
+		"\36\3\2CD\6\2\24\27!\"$$((\4\2))++\3\2?C\4\2\63\63;<\4\2\61\62\67:\3\2"+
+		"?@\2\u0118\2A\3\2\2\2\4L\3\2\2\2\6W\3\2\2\2\bb\3\2\2\2\nd\3\2\2\2\fl\3"+
+		"\2\2\2\16x\3\2\2\2\20\u0087\3\2\2\2\22\u0089\3\2\2\2\24\u0090\3\2\2\2"+
+		"\26\u0095\3\2\2\2\30\u0097\3\2\2\2\32\u009b\3\2\2\2\34\u009d\3\2\2\2\36"+
+		"\u00a1\3\2\2\2 \u00a5\3\2\2\2\"\u00b0\3\2\2\2$\u00b4\3\2\2\2&\u00c9\3"+
+		"\2\2\2(\u00cd\3\2\2\2*\u00d6\3\2\2\2,\u00d8\3\2\2\2.\u00da\3\2\2\2\60"+
+		"\u00e2\3\2\2\2\62\u00f1\3\2\2\2\64\u00f3\3\2\2\2\66\u0104\3\2\2\28\u0106"+
+		"\3\2\2\2:\u0108\3\2\2\2<\u010a\3\2\2\2>\u010d\3\2\2\2@B\7H\2\2A@\3\2\2"+
+		"\2AB\3\2\2\2BF\3\2\2\2CE\5\4\3\2DC\3\2\2\2EH\3\2\2\2FD\3\2\2\2FG\3\2\2"+
+		"\2GI\3\2\2\2HF\3\2\2\2IJ\5\b\5\2JK\7\2\2\3K\3\3\2\2\2LM\5(\25\2MP\7D\2"+
+		"\2NO\7\60\2\2OQ\5\6\4\2PN\3\2\2\2PQ\3\2\2\2QR\3\2\2\2RS\7\20\2\2S\5\3"+
+		"\2\2\2TX\5\32\16\2UX\5> \2VX\5.\30\2WT\3\2\2\2WU\3\2\2\2WV\3\2\2\2X\7"+
+		"\3\2\2\2Yc\5\n\6\2Zc\5\f\7\2[c\5\16\b\2\\c\5\22\n\2]^\7\n\2\2^_\5\b\5"+
+		"\2_`\7\13\2\2`c\3\2\2\2ac\5\24\13\2bY\3\2\2\2bZ\3\2\2\2b[\3\2\2\2b\\\3"+
+		"\2\2\2b]\3\2\2\2ba\3\2\2\2c\t\3\2\2\2de\7-\2\2ef\5$\23\2fg\7.\2\2gj\5"+
+		"\b\5\2hi\7/\2\2ik\5\30\r\2jh\3\2\2\2jk\3\2\2\2k\13\3\2\2\2lm\7#\2\2mt"+
+		"\5\b\5\2no\7\21\2\2or\5\b\5\2pq\7&\2\2qs\5\30\r\2rp\3\2\2\2rs\3\2\2\2"+
+		"su\3\2\2\2tn\3\2\2\2uv\3\2\2\2vt\3\2\2\2vw\3\2\2\2w\r\3\2\2\2xy\7%\2\2"+
+		"y\u0083\5\b\5\2z{\7\21\2\2{~\5\b\5\2|}\7&\2\2}\177\5\30\r\2~|\3\2\2\2"+
+		"~\177\3\2\2\2\177\u0081\3\2\2\2\u0080\u0082\5\20\t\2\u0081\u0080\3\2\2"+
+		"\2\u0081\u0082\3\2\2\2\u0082\u0084\3\2\2\2\u0083z\3\2\2\2\u0084\u0085"+
+		"\3\2\2\2\u0085\u0083\3\2\2\2\u0085\u0086\3\2\2\2\u0086\17\3\2\2\2\u0087"+
+		"\u0088\t\2\2\2\u0088\21\3\2\2\2\u0089\u008a\7\37\2\2\u008a\u008b\7\n\2"+
+		"\2\u008b\u008c\5$\23\2\u008c\u008d\7\21\2\2\u008d\u008e\5\32\16\2\u008e"+
+		"\u008f\7\13\2\2\u008f\23\3\2\2\2\u0090\u0093\5\26\f\2\u0091\u0092\7\23"+
+		"\2\2\u0092\u0094\7D\2\2\u0093\u0091\3\2\2\2\u0093\u0094\3\2\2\2\u0094"+
+		"\25\3\2\2\2\u0095\u0096\7D\2\2\u0096\27\3\2\2\2\u0097\u0098\5\34\17\2"+
+		"\u0098\31\3\2\2\2\u0099\u009c\5$\23\2\u009a\u009c\5\34\17\2\u009b\u0099"+
+		"\3\2\2\2\u009b\u009a\3\2\2\2\u009c\33\3\2\2\2\u009d\u009e\5\36\20\2\u009e"+
+		"\u009f\5:\36\2\u009f\u00a0\5\36\20\2\u00a0\35\3\2\2\2\u00a1\u00a2\5 \21"+
+		"\2\u00a2\u00a3\5<\37\2\u00a3\u00a4\5 \21\2\u00a4\37\3\2\2\2\u00a5\u00a6"+
+		"\5\"\22\2\u00a6\u00a7\58\35\2\u00a7\u00a8\5\"\22\2\u00a8!\3\2\2\2\u00a9"+
+		"\u00b1\7\5\2\2\u00aa\u00b1\7\6\2\2\u00ab\u00b1\7\7\2\2\u00ac\u00ad\7\n"+
+		"\2\2\u00ad\u00ae\5\32\16\2\u00ae\u00af\7\13\2\2\u00af\u00b1\3\2\2\2\u00b0"+
+		"\u00a9\3\2\2\2\u00b0\u00aa\3\2\2\2\u00b0\u00ab\3\2\2\2\u00b0\u00ac\3\2"+
+		"\2\2\u00b1#\3\2\2\2\u00b2\u00b5\7C\2\2\u00b3\u00b5\5&\24\2\u00b4\u00b2"+
+		"\3\2\2\2\u00b4\u00b3\3\2\2\2\u00b5\u00ba\3\2\2\2\u00b6\u00b7\7\21\2\2"+
+		"\u00b7\u00b9\5&\24\2\u00b8\u00b6\3\2\2\2\u00b9\u00bc\3\2\2\2\u00ba\u00b8"+
+		"\3\2\2\2\u00ba\u00bb\3\2\2\2\u00bb%\3\2\2\2\u00bc\u00ba\3\2\2\2\u00bd"+
+		"\u00be\5\26\f\2\u00be\u00bf\7\22\2\2\u00bf\u00c2\t\3\2\2\u00c0\u00c1\7"+
+		"\23\2\2\u00c1\u00c3\7D\2\2\u00c2\u00c0\3\2\2\2\u00c2\u00c3\3\2\2\2\u00c3"+
+		"\u00ca\3\2\2\2\u00c4\u00c7\7D\2\2\u00c5\u00c6\7\23\2\2\u00c6\u00c8\7D"+
+		"\2\2\u00c7\u00c5\3\2\2\2\u00c7\u00c8\3\2\2\2\u00c8\u00ca\3\2\2\2\u00c9"+
+		"\u00bd\3\2\2\2\u00c9\u00c4\3\2\2\2\u00ca\'\3\2\2\2\u00cb\u00ce\5,\27\2"+
+		"\u00cc\u00ce\5*\26\2\u00cd\u00cb\3\2\2\2\u00cd\u00cc\3\2\2\2\u00ce\u00d3"+
+		"\3\2\2\2\u00cf\u00d0\7\16\2\2\u00d0\u00d2\7\17\2\2\u00d1\u00cf\3\2\2\2"+
+		"\u00d2\u00d5\3\2\2\2\u00d3\u00d1\3\2\2\2\u00d3\u00d4\3\2\2\2\u00d4)\3"+
+		"\2\2\2\u00d5\u00d3\3\2\2\2\u00d6\u00d7\t\4\2\2\u00d7+\3\2\2\2\u00d8\u00d9"+
+		"\t\5\2\2\u00d9-\3\2\2\2\u00da\u00db\5\60\31\2\u00db/\3\2\2\2\u00dc\u00e3"+
+		"\7\6\2\2\u00dd\u00e3\7\4\2\2\u00de\u00e3\5\62\32\2\u00df\u00e3\5\66\34"+
+		"\2\u00e0\u00e3\7\5\2\2\u00e1\u00e3\7\3\2\2\u00e2\u00dc\3\2\2\2\u00e2\u00dd"+
+		"\3\2\2\2\u00e2\u00de\3\2\2\2\u00e2\u00df\3\2\2\2\u00e2\u00e0\3\2\2\2\u00e2"+
+		"\u00e1\3\2\2\2\u00e3\61\3\2\2\2\u00e4\u00e5\7\f\2\2\u00e5\u00ea\5\64\33"+
+		"\2\u00e6\u00e7\7\21\2\2\u00e7\u00e9\5\64\33\2\u00e8\u00e6\3\2\2\2\u00e9"+
+		"\u00ec\3\2\2\2\u00ea\u00e8\3\2\2\2\u00ea\u00eb\3\2\2\2\u00eb\u00ed\3\2"+
+		"\2\2\u00ec\u00ea\3\2\2\2\u00ed\u00ee\7\r\2\2\u00ee\u00f2\3\2\2\2\u00ef"+
+		"\u00f0\7\f\2\2\u00f0\u00f2\7\r\2\2\u00f1\u00e4\3\2\2\2\u00f1\u00ef\3\2"+
+		"\2\2\u00f2\63\3\2\2\2\u00f3\u00f4\7\6\2\2\u00f4\u00f5\7\66\2\2\u00f5\u00f6"+
+		"\5\60\31\2\u00f6\65\3\2\2\2\u00f7\u00f8\7\16\2\2\u00f8\u00fd\5\60\31\2"+
+		"\u00f9\u00fa\7\21\2\2\u00fa\u00fc\5\60\31\2\u00fb\u00f9\3\2\2\2\u00fc"+
+		"\u00ff\3\2\2\2\u00fd\u00fb\3\2\2\2\u00fd\u00fe\3\2\2\2\u00fe\u0100\3\2"+
+		"\2\2\u00ff\u00fd\3\2\2\2\u0100\u0101\7\17\2\2\u0101\u0105\3\2\2\2\u0102"+
+		"\u0103\7\16\2\2\u0103\u0105\7\17\2\2\u0104\u00f7\3\2\2\2\u0104\u0102\3"+
+		"\2\2\2\u0105\67\3\2\2\2\u0106\u0107\t\6\2\2\u01079\3\2\2\2\u0108\u0109"+
+		"\t\7\2\2\u0109;\3\2\2\2\u010a\u010b\t\b\2\2\u010b=\3\2\2\2\u010c\u010e"+
+		"\t\t\2\2\u010d\u010c\3\2\2\2\u010d\u010e\3\2\2\2\u010e\u010f\3\2\2\2\u010f"+
+		"\u0110\7\7\2\2\u0110?\3\2\2\2\35AFPWbjrv~\u0081\u0085\u0093\u009b\u00b0"+
+		"\u00b4\u00ba\u00c2\u00c7\u00c9\u00cd\u00d3\u00e2\u00ea\u00f1\u00fd\u0104"+
+		"\u010d";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
