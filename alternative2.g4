@@ -1,4 +1,4 @@
-grammar TreeQL;
+grammar alternative2;
 
 stats
     : COMMENT?
@@ -57,27 +57,22 @@ abstractTreeName
     ;
 selectExpression
     :
-    booleanExpression
+    arithmeticLogicExpression
     ;
 expression
     :
     treeExpression
-    | booleanExpression
+    | arithmeticLogicExpression
 ;
-booleanExpression
+arithmeticLogicExpression
     :
-    booleanOperand ( booleanOperator booleanOperand)*    
+    binaryOperand ( binaryOperator binaryOperand)*    
     ;
 
-booleanOperand
-: comparisonOperand (comparisonOperator comparisonOperand)*
-;
-comparisonOperand
-    :
-    mathOperand (mathOperator mathOperand)*
-    ;
-mathOperand
-    : BOOLEAN_LITERAL
+binaryOperand: unaryOperator? unaryOperand;
+    
+unaryOperand:
+    BOOLEAN_LITERAL
     | STRING_LITERAL
     | signed_number
     | LPAREN expression RPAREN
@@ -135,34 +130,29 @@ arr
    ;
 // no leading zeros
 
-mathOperator
+binaryOperator
     :
     ADD
     | SUB
     | DIV
     | MOD
     | STAR
-    ;
-
-booleanOperator
-    :
-    AND
+    | AND
     | OR
     | BANG
+    | EQUAL
+    | NOTEQUAL  
+    | GT
+    | GE
+    | LT  
+    | LE
     ;
 
-comparisonOperator
-   : EQUAL
-   | NOTEQUAL  
-   | GT
-   | GE
-   | LT  
-   | LE
-   ;
-
+unaryOperator:
+    NEGATION | BANG;
 
 signed_number
- : ( '+' | '-' )? NUMERIC_LITERAL
+ : ( ADD | NEGATION )? NUMERIC_LITERAL
  ;
 
 //LEXER RULES
@@ -241,6 +231,7 @@ INC:                '++';
 DEC:                '--';
 ADD:                '+';
 SUB:                '-';
+NEGATION:            '-';
 DIV:                '/';
 MOD:                '%';
 STAR:               '*';
