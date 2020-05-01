@@ -1,4 +1,4 @@
-grammar alternative2;
+grammar TreeQL;
 
 stats
     : COMMENT?
