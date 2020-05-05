@@ -46,7 +46,6 @@ explodeQuery
     :
     EXPLODE LPAREN treeExpression COMMA expression RPAREN
     ;
-
 rangeVariableDeclaration
     :
     abstractTreeName (AS VAR_NAME)?
@@ -75,7 +74,7 @@ unaryOperand:
     BOOLEAN_LITERAL
     | STRING_LITERAL
     | signed_number
-    | LPAREN expression RPAREN
+    | VAR_NAME? LPAREN expression RPAREN
     ;
 treeExpression
     : 
@@ -100,7 +99,6 @@ primitiveType
     | FLOAT
     | DOUBLE
     ;
-
 complexType
 	: TREE
 	| STRING
@@ -133,7 +131,7 @@ arr
 binaryOperator
     :
     ADD
-    | SUB
+    | SUBORNEGATION
     | DIV
     | MOD
     | STAR
@@ -148,10 +146,10 @@ binaryOperator
     ;
 
 unaryOperator:
-    NEGATION | BANG;
+    SUBORNEGATION | BANG;
 
 signed_number
- : ( ADD | NEGATION )? NUMERIC_LITERAL
+ : ( ADD | SUBORNEGATION )? NUMERIC_LITERAL
  ;
 
 //LEXER RULES
@@ -229,8 +227,8 @@ OR:                 '||';
 INC:                '++';
 DEC:                '--';
 ADD:                '+';
-SUB:                '-';
-NEGATION:            '-';
+SUBORNEGATION:                '-';
+//NEGATION:            '-'; 2 terminals can not have different operator name
 DIV:                '/';
 MOD:                '%';
 STAR:               '*';
