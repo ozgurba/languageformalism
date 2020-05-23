@@ -1,0 +1,5 @@
+//Join query example
+join tree1, 
+(select * from (join tree3,tree4 on tree3.c==tree4.d)
+ where tree2.condition == true)
+ on tree1.a==tree2.b

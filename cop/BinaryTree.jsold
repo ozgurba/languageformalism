@@ -1,0 +1,93 @@
+BinaryTree = function() {    
+    return this;
+};
+// inherit default listener
+BinaryTree.prototype = Object.create(BinaryTree.prototype);
+BinaryTree.prototype.constructor = BinaryTree;
+
+
+// Enter a parse tree produced by TreeQLParser#arithmeticLogicExpression.
+BinaryTree.prototype.enterArithmeticLogicExpression = function(ctx) {
+    if(ctx.getChildCount()>3){
+        this.simplifyExpression(ctx);
+    }
+    //console.log("BinaryTree.enterArithmeticLogicExpression:"+ctx.children[0]);
+};
+
+BinaryTree.prototype.simplifyExpression = function(ctx) {
+    var updatedCtx=ctx;
+    var updatedChildren=[];
+    var precedenceArray=new Array(maxPrecedence);
+    var i=1;
+    for(;i<ctx.getChildCount();i++){
+        var precedence=precedenceMap.get(ctx.children[i].getText());
+        if(precedence==undefined)
+            precedence=maxPrecedence-1;
+        console.log("BinaryTree.simplifyExpression:"+precedence);
+        if(precedenceArray[precedence]==undefined){
+            precedenceArray[precedence]=new buckets.LinkedList();
+        }
+        precedenceArray[precedence].add(ctx.children[i]);
+        this.promote(updatedChildren,precedenceArray);
+    }
+};
+
+BinaryTree.prototype.promote = function(children,precedenceArray) {
+    this.testTree(children,precedenceArray);
+    var i=0;
+    for(;i<precedenceArray.length;i++){
+        if(precedenceArray[i]!=undefined){
+            console.log("precedenceArray: "+i+":")
+            var j=0;
+            for(;j<precedenceArray[i].size();j++) {
+                console.log(precedenceArray[i].elementAtIndex(j).getText());
+            }
+        }
+    }
+};
+BinaryTree.prototype.testTree = function(children,precedenceArray) {
+   /* var tree = new TreeModel();
+    var root = tree.parse({id:1, data:precedenceArray, children:[{id:2}]});
+    console.log(tree);*/
+    //var treeNode=Tree.Node(precedenceArray);
+    var binaryTree=BinaryTree.BinaryTree();
+    console.log(binaryTree);
+
+/*    var a = new Node("A");
+    tree = new treestruct.Tree(a);
+    var b = tree.addChild(a, "B");
+    var c = tree.addChild(tree.parent(b), "C");
+    var d = tree.addChild(b, "D");
+
+    console.log("a is root? " + tree.isRoot(a)+"<br>");
+    console.log("c is ext.? " + tree.isExternal(c)+"<br>");
+    console.log("d is int.? " + tree.isInternal(d)+"<br>");
+    console.log("tree size=" + tree.getSize()+"<br>");
+
+    console.log("children of a: " + tree.children(a)+"<br>");
+    console.log("tree elements: " + tree.elements()+"<br>");
+    var node_list = tree.positions();
+    console.log("# of nodes=" + node_list.length+"<br>");
+
+    tree.swapElements(a, b);
+    console.log("a now contains " + a+"<br>");
+    console.log("b now contains " + b+"<br>");
+            
+    var s = tree.replaceElement(c, "CC");
+    console.log("c now contains " + c + " but previoulsy had " + s+"<br>");
+            
+    console.log("b has " + tree.children(b).length + " child nodes"+"<br>");
+    tree.removeExternal(d);
+    console.log("b now has " + tree.children(b).length + " child nodes"+"<br>");
+
+
+
+    tree.showTree();*/
+}
+
+
+BinaryTree.prototype.getBinaryOperator = function(ctx) {
+    return ctx.getText();
+};
+
+exports.BinaryTree = BinaryTree;
