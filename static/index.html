@@ -3,26 +3,31 @@
 <head>
     <title>treeql on the Web</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script type="text/javascript" src="lib/require.js"></script> 
+    <script type="text/javascript" src="lib/require.js"></script>
+    <!--script type="text/javascript" src="lib/BinaryTree.js"></script--> 
     <link rel="stylesheet" type="text/css" href="css/json-formatter.css">
 </head>
 <body>
 <div class="root"></div>
 <div id="inputs">
 <textarea id="code" rows="5" cols="800">
-   -3+4+(-7*(5-(8/9&&true+"samplestring")))
+   -3+4*(-7*(5-(8/9&&true+"samplestring")))
 </textarea>
 <br/>
 <button id="parse">Parse</button>
 </div>
 <br/>
-<script src="parser-executer/TreeQLExecuter.js"></script>
 <script type="text/javascript">
 
 var antlr4 = require('antlr4/index');
 var treeqlLexer = require('generated-parser/treeqlLexer');
 var treeqlParser = require('generated-parser/treeqlParser');
-var treeqlExecuter = require('parser-executer/treeqlExecuter');
+//var treeqlExecuter = require('parser-executer/treeqlExecuter');
+var treeqlActionListener = require('parser-executer/treeqlActionListener');
+//var treeqlActionTreeConverter = require('parser-executer/treeqlActionTreeConverter');
+var treeqlASTConverter = require('parser-executer/treeqlASTConverter');
+var TreeQLActionTreeCreator=require('parser-executer/TreeQLActionTreeCreator');
+
 var JSONFormatter=require('lib/json/json-formatter');
 
 document.getElementById("parse").addEventListener("click", function(){
@@ -31,6 +36,9 @@ document.getElementById("parse").addEventListener("click", function(){
     var lexer = new treeqlLexer.TreeQLLexer(chars);
     var tokens  = new antlr4.CommonTokenStream(lexer);
     var parser = new treeqlParser.TreeQLParser(tokens);
+    var actionTreeCreator = new TreeQLActionTreeCreator();
+    
+    var actionListener = new treeqlActionListener.TreeQLActionListener();
     //TODO var executer = new treeqlExecuter.TreeQLExecuter();
     parser.buildParseTrees = true;
     var tree = parser.arithmeticLogicExpression();
@@ -40,8 +48,13 @@ document.getElementById("parse").addEventListener("click", function(){
     //const formatter = new JSONFormatter(tree);
     document.getElementsByClassName("root")[0].innerHTML = '';
     //document.getElementsByClassName("root")[0].appendChild(formatter.render());
-    updateTree(tree,parser.ruleNames,"tree","A");
-    executeArithmeticLogicExpression(tree,parser.ruleNames);
+    drawTreeInHtml(tree,parser.ruleNames,"parseTree","A");
+    var actionTree=actionTreeCreator.convertToActionTree(tree);
+    console.log(actionTree);
+    //executeArithmeticLogicExpression(actionTree,parser.ruleNames);
+    //antlr4.tree.ParseTreeWalker.DEFAULT.walk(ASTConverter, actionTree);
+    //antlr4.tree.ParseTreeWalker.DEFAULT.walk(actionListener, actionTree);
+    //drawTreeInHtml(tree,parser.ruleNames,"actionTree","A");
     //TODO executer.arithmeticLogicExpression(tree,parser.ruleNames);    
 });
 
@@ -66,7 +79,7 @@ var updateTable = function(tree, ruleNames) {
         container.appendChild(newElement);
     }
 };
-var updateTree = function(tree, ruleNames,containerName,divId) {
+var drawTreeInHtml = function(tree, ruleNames,containerName,divId) {
     var container = document.getElementById(containerName);
     while (container.hasChildNodes()) {
         container.removeChild(container.lastChild);
@@ -81,13 +94,15 @@ var updateTree = function(tree, ruleNames,containerName,divId) {
         newElement.appendChild(newElementText);
         container.appendChild(newElement);
         if(child.children)
-            updateTree(child,ruleNames,newElement.id,newElement.id+"A");        
+            drawTreeInHtml(child,ruleNames,newElement.id,newElement.id+"A");        
     }
 };
 
 </script>
 <br/>
-<div id="tree">
+<div id="parseTree">
+</div> 
+<div id="actionTree">
 </div> 
 </body>
 </html>

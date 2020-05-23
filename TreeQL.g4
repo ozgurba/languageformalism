@@ -143,6 +143,7 @@ binaryOperator
     | GE
     | LT  
     | LE
+    | COMMA
     ;
 
 unaryOperator:
