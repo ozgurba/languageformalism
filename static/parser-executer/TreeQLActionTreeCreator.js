@@ -21,6 +21,20 @@ class TreeQLActionTreeCreator{
         this.leafNodeSet.add('TerminalNodeImpl');
 
     }
+    convertFromStatsExprToActionTree(tree){
+        return this.convertExprToActionTree();
+    }
+
+    convertExprToActionTree(tree){
+        if(!tree||!tree.root)
+            return;
+        var i=0;
+        var childArray[];
+        for(;i<tree.getChildCount();i++)
+            child[i]=this.convertExprToActionTree(tree.children[i]);
+        this.addNodeToActionTree(tree.root);
+    }
+
      convertFromArithmeticLogicExprToActionTree(tree){
         var convertedTree=this.convertArithmeticLogicExpressionsForTree(tree);
         return convertedTree;
