@@ -22,17 +22,39 @@ class Node {
     }
     strExpression() {
         var token='';
-        if(this.left) {
-            token=token.concat('(');
-            token=token.concat(this.left.strExpression());
+        if(this.isBinary){
+            if(this.left) {
+                token=token.concat('(');
+                token=token.concat(this.left.strExpression());
+                token=token.concat(')');
+            }
+            if(this.data&&this.data.getText())
+                token=token.concat(' '+this.data.getText()+' ');
+            else
+                token=token.concat(' NOdata ');
+            if(this.right) {
+                token=token.concat('(');
+                token=token.concat(this.right.strExpression());
+                token=token.concat(')');
+            }
+        } else{
+            if(this.data&&this.data.getText())
+                token=token.concat(' '+this.data.getText()+' (');
+            else
+                token=token.concat(' NOdata (');
+            var i=0;            
+            for(i=0;i<this.children.length;i++){
+                token=token.concat('(');
+                if(typeof this.children[i].strExpression === "function")
+                    token=token.concat(this.children[i].strExpression());    
+                else {
+                    token=token.concat(this.children[i].toString());
+                }
+                token=token.concat(')');
+            }
             token=token.concat(')');
         }
-        token=token.concat(' '+this.data.getText()+' ');
-        if(this.right) {
-            token=token.concat('(');
-            token=token.concat(this.right.strExpression());
-            token=token.concat(')');
-        }
+        
         return token;
     }
     setChildren(children){

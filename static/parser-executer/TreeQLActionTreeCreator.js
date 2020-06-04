@@ -22,22 +22,53 @@ class TreeQLActionTreeCreator{
 
     }
     convertFromStatsExprToActionTree(tree){
-        return this.convertExprToActionTree();
+        return this.convertExprToActionTree(tree);
     }
 
     convertExprToActionTree(tree){
-        if(!tree||!tree.root)
+        if(!tree)
             return;
+        if(tree.constructor.name==='SelectQueryContext'){
+            return this.convertSelectQueryExpressionsForTree(tree);
+        } else if(tree.constructor.name==='ArithmeticLogicExpressionContext'){
+            return this.convertArithmeticLogicExpressionsForTree(tree);  
+        }
         var i=0;
-        var childArray[];
-        for(;i<tree.getChildCount();i++)
-            child[i]=this.convertExprToActionTree(tree.children[i]);
-        this.addNodeToActionTree(tree.root);
+        var childArray=new Array();
+        for(;i<tree.getChildCount();i++){
+            childArray[i]=this.convertExprToActionTree(tree.children[i]);
+        }
+        return this.addNodeToActionTree(tree.root,childArray);
+    }
+
+    addNodeToActionTree(tree,childArray){
+        var actionTree=new treeClasses.ActionTree(); 
+        actionTree.insert(tree);    
+        if(childArray.length!==0){
+            actionTree.root.children=childArray;
+            actionTree.root.isBinary=false;
+        }
+
+        return actionTree;
     }
 
      convertFromArithmeticLogicExprToActionTree(tree){
         var convertedTree=this.convertArithmeticLogicExpressionsForTree(tree);
         return convertedTree;
+    }
+
+    convertSelectQueryExpressionsForTree(tree) {
+        if(!tree)
+            return;
+        var actionTree=new treeClasses.ActionTree();
+        var i=0;
+        actionTree.insert(tree);
+        actionTree.root.children[0]=this.convertExprToActionTree(tree.children[1]); //treeExpression
+        actionTree.root.children[1]=this.convertExprToActionTree(tree.children[3]); //treeQuery
+        if(tree.getChildCount()==6){ //where context exists
+            actionTree.root.children[2]=this.convertExprToActionTree(tree.children[5]);
+        }
+        return actionTree;
     }
     convertArithmeticLogicExpressionsForTree(ctx){
         var actionTree=new treeClasses.ActionTree(); 
