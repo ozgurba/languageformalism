@@ -11,6 +11,8 @@ var precedenceMap = new Map([[',' , 0],
                             ['*' , 4] ,['/', 4],['%',4] 
                             ]);
 const maxPrecedence=5;
+const SELECT_PRIORITY=0;
+const OTHER_PRIORITY=-1;
 
 class TreeQLActionTreeCreator{    
     constructor(){
@@ -28,22 +30,27 @@ class TreeQLActionTreeCreator{
     convertExprToActionTree(tree){
         if(!tree)
             return;
-        if(tree.constructor.name==='SelectQueryContext'){
-            return this.convertSelectQueryExpressionsForTree(tree);
-        } else if(tree.constructor.name==='ArithmeticLogicExpressionContext'){
-            return this.convertArithmeticLogicExpressionsForTree(tree);  
+        console.log(tree.constructor.name);
+        switch(tree.constructor.name) {
+            case 'SelectQueryContext':
+                return this.convertSelectQueryExpressionsForTree(tree);
+            case 'ArithmeticLogicExpressionContext':
+                return this.convertArithmeticLogicExpressionsForTree(tree);  
+            case '': 
+            default:
+                break;
         }
         var i=0;
         var childArray=new Array();
         for(;i<tree.getChildCount();i++){
             childArray[i]=this.convertExprToActionTree(tree.children[i]);
         }
-        return this.addNodeToActionTree(tree.root,childArray);
+        return this.addNodeToActionTree(tree,childArray);
     }
 
     addNodeToActionTree(tree,childArray){
         var actionTree=new treeClasses.ActionTree(); 
-        actionTree.insert(tree);    
+        actionTree.insert(tree,OTHER_PRIORITY);    
         if(childArray.length!==0){
             actionTree.root.children=childArray;
             actionTree.root.isBinary=false;
@@ -62,7 +69,7 @@ class TreeQLActionTreeCreator{
             return;
         var actionTree=new treeClasses.ActionTree();
         var i=0;
-        actionTree.insert(tree);
+        actionTree.insert(tree,SELECT_PRIORITY);
         actionTree.root.children[0]=this.convertExprToActionTree(tree.children[1]); //treeExpression
         actionTree.root.children[1]=this.convertExprToActionTree(tree.children[3]); //treeQuery
         if(tree.getChildCount()==6){ //where context exists
