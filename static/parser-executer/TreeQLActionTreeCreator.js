@@ -14,6 +14,7 @@ const maxPrecedence=5;
 const SELECT_PRIORITY=0;
 const OTHER_PRIORITY=-1;
 
+
 class TreeQLActionTreeCreator{    
     constructor(){
         this.leafNodeSet = new buckets.Set();
@@ -36,7 +37,8 @@ class TreeQLActionTreeCreator{
                 return this.convertSelectQueryExpressionsForTree(tree);
             case 'ArithmeticLogicExpressionContext':
                 return this.convertArithmeticLogicExpressionsForTree(tree);  
-            case '': 
+            case 'TreeExpressionContext':
+                return this.convertTreeExpressionsForTree(tree);
             default:
                 break;
         }
@@ -74,6 +76,23 @@ class TreeQLActionTreeCreator{
         actionTree.root.children[1]=this.convertExprToActionTree(tree.children[3]); //treeQuery
         if(tree.getChildCount()==6){ //where context exists
             actionTree.root.children[2]=this.convertExprToActionTree(tree.children[5]);
+        }
+        return actionTree;
+    }
+    convertTreeExpressionsForTree(tree){
+        var actionTree=new treeClasses.ActionTree();
+        var i=0;
+        actionTree.insert(tree,OTHER_PRIORITY);
+        var childrenCount=0;
+        for(;i<tree.getChildCount();i++) {
+            if(tree.children[i].constructor.name==='TreeElementContext'){
+                actionTree.root.children[childrenCount]=this.convertExprToActionTree(tree.children[i]);
+                childrenCount++;
+            } else if(tree.children[i].getText()==='*') {
+                actionTree.root.children[childrenCount]=this.convertExprToActionTree(tree.children[i]);
+                childrenCount++;
+            }
+
         }
         return actionTree;
     }

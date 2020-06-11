@@ -39,4 +39,4 @@ var evaluateStatsExpression=function(input){
 
 
 //evaluateArithmeticLogicExpression("-18+45*true&&false+\"test\"");
-evaluateStatsExpression("select country.name from country where 3*5+8==9");
+evaluateStatsExpression("select *,country.name from country where 3*5+8==9");
